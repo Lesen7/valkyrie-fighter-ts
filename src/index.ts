@@ -48,7 +48,7 @@ window.onload = function() {
     var pl;
 
     // Input variables
-    var spaceBar;
+    var spaceBar: Phaser.Key;
 
     function create () {
         spaceBar = game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
@@ -59,10 +59,10 @@ window.onload = function() {
     }
 
     function update () {
-        console.log(player.health);
 
         if(spaceBar.isDown)
         {
+            console.log(player.health);
             player.health--;
         }
 
