@@ -1,3 +1,3 @@
-export class Actor {
-    
+export default class Actor {
+
 }

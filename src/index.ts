@@ -1,9 +1,9 @@
 import * as Phaser from 'phaser-ce';
 
 // Class imports
-import { Actor } from './models/actor';
-import { Player } from './models/player';
-import { Enemy } from './models/enemy';
+import Actor from './models/actor';
+import Player from './models/player';
+import Enemy from './models/enemy';
 
 window.onload = function() {
     // Configuration object

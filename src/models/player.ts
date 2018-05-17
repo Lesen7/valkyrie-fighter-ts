@@ -1,3 +1,5 @@
-export class Player {
-    
+import Actor from './actor';
+
+export default class Player {
+
 }
