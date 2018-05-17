@@ -4,6 +4,7 @@ import * as Phaser from 'phaser-ce';
 import Actor from './models/actor';
 import Player from './models/player';
 import Enemy from './models/enemy';
+import { Sprite } from 'phaser-ce';
 
 window.onload = function() {
     // Configuration object
@@ -44,13 +45,31 @@ window.onload = function() {
 
     // Player variables
     var player;
+    var pl;
+
+    // Input variables
+    var spaceBar;
 
     function create () {
-        player = game.add.sprite(32, game.world.height - 150, 'vf1_sp');
+        spaceBar = game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+
+        // Player initialization
+        player = new Player(10, 50);
+        player.sprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp');
     }
 
     function update () {
+        console.log(player.health);
 
+        if(spaceBar.isDown)
+        {
+            player.health--;
+        }
+
+        if(player.health <= 0)
+        {
+            player.sprite.kill();
+        }
     }
 
 }; 
