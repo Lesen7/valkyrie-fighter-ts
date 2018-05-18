@@ -25,8 +25,20 @@ window.onload = function() {
 
         }
     }
+
     // Game initialization
     var game = new Phaser.Game(config);
+
+    // Input configuration variables
+    var keysConfig = {
+        fire: Phaser.KeyCode.SPACEBAR,
+        special: Phaser.KeyCode.CONTROL,
+        up: Phaser.KeyCode.W,
+        left: Phaser.KeyCode.LEFT,
+        down: Phaser.KeyCode.DOWN,
+        right: Phaser.KeyCode.RIGHT,
+    }
+    var keys: ControlLayout;
 
     function preload () {
         // Background images
@@ -43,17 +55,26 @@ window.onload = function() {
         game.load.spritesheet('reguld_sp', 'assets/sprites/reguld/reguld_sp.png', 32, 37);
         game.load.spritesheet('reguld_move', 'assets/sprites/reguld/reguld_move.png', 32, 37);
     }
+
     // Player variables
-    var player;
+    var player: Player;
 
     function create () {
+        // Input initialization
+        keys = new ControlLayout(keysConfig);
+
         // Player initialization
         player = new Player(10, 50);
         player.sprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp');
     }
 
     function update () {
-        
+        // Movement input
+        if(keys.up.isDown)
+        {
+        }
+
+        // TODO: proper player death
         if(player.health <= 0)
         {
             player.sprite.kill();

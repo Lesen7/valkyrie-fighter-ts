@@ -1,5 +1,6 @@
 canvas {
-    border: 5px solid gray;
+    border: 5px solid #00ff00;
     border-radius: 2px;
+    box-shadow: 0 0 10px;
     margin: auto;
 }
