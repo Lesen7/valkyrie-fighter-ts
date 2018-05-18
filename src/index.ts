@@ -58,20 +58,26 @@ window.onload = function() {
 
     // Player variables
     var player: Player;
+    var spr;
 
     function create () {
         // Input initialization
         keys = new ControlLayout(keysConfig);
 
         // Player initialization
-        player = new Player(10, 50);
-        player.sprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp');
+        spr = game.add.sprite(32, game.world.height - 150, 'vf1_sp');
+        player = new Player(10, 50, spr);
     }
 
     function update () {
         // Movement input
         if(keys.up.isDown)
         {
+            player.move(0, player.speed);
+        }
+        if(keys.up.isDown)
+        {
+            player.move(0, player.speed);
         }
 
         // TODO: proper player death

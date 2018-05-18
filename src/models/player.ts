@@ -5,8 +5,8 @@ export default class Player extends Actor {
     // Properties
     sprite: Sprite;
     health;
-    positionX = this.sprite.x;
-    positionY = this.sprite.y;
+    positionX;
+    positionY;
     speed;
 
     // Methods
