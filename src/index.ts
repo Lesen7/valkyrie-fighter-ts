@@ -4,6 +4,7 @@ import * as Phaser from 'phaser-ce';
 import Actor from './models/actor';
 import Player from './models/player';
 import Enemy from './models/enemy';
+import ControlLayout from './models/input';
 import { Sprite } from 'phaser-ce';
 
 window.onload = function() {
@@ -42,34 +43,20 @@ window.onload = function() {
         game.load.spritesheet('reguld_sp', 'assets/sprites/reguld/reguld_sp.png', 32, 37);
         game.load.spritesheet('reguld_move', 'assets/sprites/reguld/reguld_move.png', 32, 37);
     }
-
     // Player variables
     var player;
-    var pl;
-
-    // Input variables
-    var spaceBar: Phaser.Key;
 
     function create () {
-        spaceBar = game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
-
         // Player initialization
         player = new Player(10, 50);
         player.sprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp');
     }
 
     function update () {
-
-        if(spaceBar.isDown)
-        {
-            console.log(player.health);
-            player.health--;
-        }
-
+        
         if(player.health <= 0)
         {
             player.sprite.kill();
         }
     }
-
-}; 
+};
