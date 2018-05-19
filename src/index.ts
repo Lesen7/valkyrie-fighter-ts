@@ -58,15 +58,15 @@ window.onload = function() {
 
     // Player variables
     var player: Player;
-    var spr;
+    var playerSpr;
 
     function create () {
         // Input initialization
         keys = new ControlLayout(keysConfig);
 
         // Player initialization
-        spr = game.add.sprite(32, game.world.height - 150, 'vf1_sp');
-        player = new Player(10, 50, spr);
+        playerSpr = game.add.sprite(32, game.world.height - 150, 'vf1_sp');
+        player = new Player(10, 50, playerSpr);
     }
 
     function update () {
@@ -75,9 +75,9 @@ window.onload = function() {
         {
             player.move(0, player.speed);
         }
-        if(keys.up.isDown)
+        if(keys.down.isDown)
         {
-            player.move(0, player.speed);
+            player.move(0, -player.speed);
         }
 
         // TODO: proper player death
