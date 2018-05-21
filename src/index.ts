@@ -24,7 +24,7 @@ window.onload = () => {
 
         }
     };
-    
+
     // Game initialization
     const game = new Phaser.Game(config);
 
@@ -35,9 +35,7 @@ window.onload = () => {
 
         // Player sprites/images
         game.load.image('player_bullet', 'assets/sprites/vf1/player_bullet.png');
-        game.load.spritesheet('vf1_sp', 'assets/sprites/vf1/vf1_sp.png', 32, 37);
-        game.load.spritesheet('vf1_turn_l', 'assets/sprites/vf1/vf1_turn_l.png', 32, 37);
-        game.load.spritesheet('vf1_turn_r', 'assets/sprites/vf1/vf1_turn_r.png', 32, 37);
+        game.load.spritesheet('vf1_sp_sh', 'assets/sprites/vf1/vf1_sp.png', 32, 37);
 
         // Enemy sprites/images
         game.load.spritesheet('reguld_sp', 'assets/sprites/reguld/reguld_sp.png', 32, 37);
@@ -64,11 +62,13 @@ window.onload = () => {
         keys = new ControlLayout(keysConfig);
 
         // Player initialization
-        playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp');
+        playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
         player = new Player(100, 5, playerSprite);
 
         // Player animations
-        player.sprite.animations.add('thrusters', null, 10, true);
+        player.sprite.animations.add('thrusters', [2, 3], 10, true);
+        player.sprite.animations.add('turn_l', [0, 1], 10, true);
+        player.sprite.animations.add('turn_r', [4, 5], 10, true);
     }
 
     function update() {
