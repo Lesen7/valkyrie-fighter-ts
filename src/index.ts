@@ -20,9 +20,6 @@ window.onload = () => {
             preload,
             create,
             update,
-        },
-        physicsConfig: {
-
         }
     };
 
@@ -51,9 +48,20 @@ window.onload = () => {
     let playerSprite: Phaser.Sprite;
     let playerBullet: Bullet;
 
-    // Global custom actor groups
+    // TODO: Global custom actor groups
+
+    // Background images
+    let background0: Phaser.TileSprite;
+    let background1: Phaser.TileSprite;
 
     function create() {
+        // Game variable initializations
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        // Backgrounds
+        background0 = game.add.tileSprite(0, 0, 600, 800, 'stars_bg_0');
+        background1 = game.add.tileSprite(0, 0, 600, 800, 'stars_bg_1');
+
         // Input configuration
         const keysConfig = {
             fire: game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR),
@@ -65,12 +73,12 @@ window.onload = () => {
         };
         keys = new ControlLayout(keysConfig);
 
-        // Player initialization
+        // Player initializations
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(game, playerSprite, 100, 5);
-        player.fireRate = 5;
+        player = new Player(game, playerSprite, 100, 5, 5, 11);
+        game.physics.arcade.enable(player.sprite);
+        player.sprite.body.collideWorldBounds = true;
         player.bullets = [];
-
         // Player animations
         player.sprite.animations.add('turn_l', [0, 1], 10, true);
         player.sprite.animations.add('thrusters', [2, 3], 10, true);
@@ -78,6 +86,10 @@ window.onload = () => {
     }
 
     function update() {
+        // Scroll backgrounds
+        background0.tilePosition.y += 0.4;
+        background1.tilePosition.y += 0.5;
+
         // Player input
         if (keys.left.isDown) {
             player.move(-player.speed, 0);
@@ -96,13 +108,17 @@ window.onload = () => {
         if (keys.fire.isDown) {
             player.attack();
         }
-        
+
+        // Move the player bullets until they reach the edge of the screen
         if (player.bullets != null) {
-            player.bullets.forEach((element) => {
+            player.bullets.forEach((element, index) => {
                 if (element.sprite.y > 0) {
                     element.move();
                 } else {
                     element.sprite.kill();
+                    player.bullets.splice(index, 1);
+                    // This is done so the Garbage Collector can reclaim the object
+                    element = undefined;
                 }
             });
         }

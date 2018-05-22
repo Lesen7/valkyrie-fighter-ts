@@ -3,7 +3,6 @@ import Actor from "./actor";
 
 export default class Bullet extends Actor {
     // Properties
-    shootOffset: number;
 
     // Methods
     move() {
