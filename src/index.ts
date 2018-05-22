@@ -51,6 +51,8 @@ window.onload = () => {
     let playerSprite: Phaser.Sprite;
     let playerBullet: Bullet;
 
+    // Global custom actor groups
+
     function create() {
         // Input configuration
         const keysConfig = {
@@ -65,8 +67,9 @@ window.onload = () => {
 
         // Player initialization
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(100, 5, playerSprite);
-        playerBullet.sprite = game.add.sprite(player.positionX, player.positionY, 'player_bullet');
+        player = new Player(game, playerSprite, 100, 5);
+        player.fireRate = 5;
+        player.bullets = [];
 
         // Player animations
         player.sprite.animations.add('turn_l', [0, 1], 10, true);
@@ -91,9 +94,17 @@ window.onload = () => {
             player.move(0, player.speed);
         }
         if (keys.fire.isDown) {
-            player.bullet = new Bullet(1, playerBullet, 50 + player.speed);
             player.attack();
         }
-
+        
+        if (player.bullets != null) {
+            player.bullets.forEach((element) => {
+                if (element.sprite.y > 0) {
+                    element.move();
+                } else {
+                    element.sprite.kill();
+                }
+            });
+        }
     }
 };

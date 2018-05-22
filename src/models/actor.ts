@@ -1,19 +1,17 @@
-import { Sprite } from 'phaser-ce';
+import { Sprite, Game } from 'phaser-ce';
 
 // Defines the foundation for all interactable objects
 export default abstract class Actor {
     // Properties
+    game: Game;
     sprite: Sprite;
-    positionX: number;
-    positionY: number;
     health: number;
     speed: number;
 
     // Methods
-    constructor(health: number, speed: number, sprite: Sprite) {
+    constructor(game: Game, sprite: Sprite, health: number, speed: number) {
+        this.game = game;
         this.sprite = sprite;
-        this.positionX = this.sprite.x;
-        this.positionY = this.sprite.y;
         this.health = health;
         this.speed = speed;
     }

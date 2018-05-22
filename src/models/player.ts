@@ -5,14 +5,18 @@ import Bullet from './bullet';
 export default class Player extends Actor {
     // Properties
     fireRate: number;
-    bullet: Bullet;
+    private bulletTimer: number;
+    bullets: Bullet[];
 
     // Methods
     attack() {
-        let bulletTimer = this.fireRate;
-        if (bulletTimer <= 0)
+        if (this.bulletTimer <= 0 || this.bulletTimer == undefined)
         {
-            
+            this.bulletTimer = this.fireRate;
+            this.bullets.push(new Bullet(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, 'player_bullet'), 1, this.speed * 2));
+        } else {
+            this.bulletTimer--;
+            console.log(this.bulletTimer);
         }
     }
 }
