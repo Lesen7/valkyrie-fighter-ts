@@ -35,7 +35,7 @@ window.onload = () => {
 
         // Player sprites/images
         game.load.image('player_bullet', 'assets/sprites/vf1/player_bullet.png');
-        game.load.spritesheet('vf1_sp_sh', 'assets/sprites/vf1/vf1_sp.png', 32, 37);
+        game.load.spritesheet('vf1_sp_sh', 'assets/sprites/vf1/vf1_sp_sh.png', 32, 37);
 
         // Enemy sprites/images
         game.load.spritesheet('reguld_sp', 'assets/sprites/reguld/reguld_sp.png', 32, 37);
@@ -66,13 +66,13 @@ window.onload = () => {
         player = new Player(100, 5, playerSprite);
 
         // Player animations
-        player.sprite.animations.add('thrusters', [2, 3], 10, true);
         player.sprite.animations.add('turn_l', [0, 1], 10, true);
+        player.sprite.animations.add('thrusters', [2, 3], 10, true);
         player.sprite.animations.add('turn_r', [4, 5], 10, true);
     }
 
     function update() {
-        // Player input (movement)
+        // Player input
         if (keys.left.isDown) {
             player.move(-player.speed, 0);
             player.sprite.animations.play('turn_l');
@@ -86,6 +86,9 @@ window.onload = () => {
             player.move(0, -player.speed);
         } else if (keys.down.isDown) {
             player.move(0, player.speed);
+        }
+        if (keys.fire.isDown) {
+            player.attack();
         }
 
         // TODO: proper player death
