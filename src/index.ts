@@ -5,6 +5,7 @@ import Actor from './models/actor';
 import Player from './models/player';
 import Enemy from './models/enemy';
 import ControlLayout from './models/input';
+import Bullet from './models/bullet';
 
 window.onload = () => {
     // Game configuration object
@@ -47,7 +48,8 @@ window.onload = () => {
 
     // Global Player variables
     let player: Player;
-    let playerSprite;
+    let playerSprite: Phaser.Sprite;
+    let playerBullet: Bullet;
 
     function create() {
         // Input configuration
@@ -64,6 +66,7 @@ window.onload = () => {
         // Player initialization
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
         player = new Player(100, 5, playerSprite);
+        playerBullet.sprite = game.add.sprite(player.positionX, player.positionY, 'player_bullet');
 
         // Player animations
         player.sprite.animations.add('turn_l', [0, 1], 10, true);
@@ -88,12 +91,9 @@ window.onload = () => {
             player.move(0, player.speed);
         }
         if (keys.fire.isDown) {
+            player.bullet = new Bullet(1, playerBullet, 50 + player.speed);
             player.attack();
         }
 
-        // TODO: proper player death
-        if (player.health <= 0) {
-            player.sprite.kill();
-        }
     }
 };
