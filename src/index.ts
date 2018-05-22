@@ -108,7 +108,7 @@ window.onload = () => {
         if (keys.fire.isDown) {
             player.attack();
         }
-
+        
         // Move the player bullets until they reach the edge of the screen
         if (player.bullets != null) {
             player.bullets.forEach((element, index) => {
