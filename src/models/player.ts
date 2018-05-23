@@ -4,8 +4,10 @@ import Bullet from './bullet';
 
 export default class Player extends Actor {
     // Properties
+    /// The lower the number, the higher the rate
     fireRate: number;
     shootOffsetX: number;
+    /// Private variable to count down the firing rate
     private bulletTimer: number;
     bullets: Bullet[];
 
@@ -15,6 +17,7 @@ export default class Player extends Actor {
         this.fireRate = fireRate;
         this.shootOffsetX = shootOffsetX;
     }
+    
 
     attack() {
         if (this.bulletTimer <= 0 || this.bulletTimer == undefined)

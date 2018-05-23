@@ -58,7 +58,7 @@ window.onload = () => {
         // Game variable initializations
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        // Backgrounds
+        // Backgrounds tilesprites. Numbered according to 'z-index'
         background0 = game.add.tileSprite(0, 0, 600, 800, 'stars_bg_0');
         background1 = game.add.tileSprite(0, 0, 600, 800, 'stars_bg_1');
 
@@ -108,16 +108,16 @@ window.onload = () => {
         if (keys.fire.isDown) {
             player.attack();
         }
-        
+
         // Move the player bullets until they reach the edge of the screen
         if (player.bullets != null) {
             player.bullets.forEach((element, index) => {
                 if (element.sprite.y > 0) {
                     element.move();
                 } else {
-                    element.sprite.kill();
+                    element.destroy();
                     player.bullets.splice(index, 1);
-                    // This is done so the Garbage Collector can reclaim the object
+                    // This is done so the Garbage Collector can reclaim the instance
                     element = undefined;
                 }
             });
