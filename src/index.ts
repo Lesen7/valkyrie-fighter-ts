@@ -46,7 +46,10 @@ window.onload = () => {
     // Global Player variables
     let player: Player;
     let playerSprite: Phaser.Sprite;
-    let playerBullet: Bullet;
+
+    // Global enemy variables
+    let enemy: Enemy;
+    let enemySprite: Phaser.Sprite;
 
     // TODO: Global custom actor groups
 
@@ -75,20 +78,36 @@ window.onload = () => {
 
         // Player initializations
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(game, playerSprite, 100, 5, 5, 11);
+        player = new Player(game, playerSprite, 100, 250, 5, 11);
         game.physics.arcade.enable(player.sprite);
+        player.sprite.body.allowGravity = false;
         player.sprite.body.collideWorldBounds = true;
+        player.sprite.body.immovable = true;
         player.bullets = [];
         // Player animations
         player.sprite.animations.add('turn_l', [0, 1], 10, true);
         player.sprite.animations.add('thrusters', [2, 3], 10, true);
         player.sprite.animations.add('turn_r', [4, 5], 10, true);
+
+        // Enemy initializations
+        enemySprite = game.add.sprite(game.world.width / 2, 10, 'reguld_sp');
+        enemy = new Enemy(game, enemySprite, 10, 5);
+        game.physics.arcade.enable(enemy.sprite);
+        enemy.sprite.body.collideWorldBounds = true;
+        enemy.sprite.body.immovable = true;
     }
 
     function update() {
+        // Collisions
+        game.physics.arcade.collide(player.sprite, enemy.sprite);
+
         // Scroll backgrounds
         background0.tilePosition.y += 0.4;
         background1.tilePosition.y += 0.5;
+
+        // TODO: Move to player update
+        player.sprite.body.velocity.x = 0;
+        player.sprite.body.velocity.y = 0;
 
         // Player input
         if (keys.left.isDown) {
@@ -99,11 +118,14 @@ window.onload = () => {
             player.sprite.animations.play('turn_r');
         } else {
             player.sprite.animations.play('thrusters');
+            player.sprite.body.velocity.x = 0;
         }
         if (keys.up.isDown) {
             player.move(0, -player.speed);
         } else if (keys.down.isDown) {
             player.move(0, player.speed);
+        } else {
+            player.sprite.body.velocity.y = 0;
         }
         if (keys.fire.isDown) {
             player.attack();
@@ -111,14 +133,18 @@ window.onload = () => {
 
         // Move the player bullets until they reach the edge of the screen
         if (player.bullets != null) {
-            player.bullets.forEach((element, index) => {
-                if (element.sprite.y > 0) {
-                    element.move();
+            player.bullets.forEach((bullet, index) => {    
+            game.physics.arcade.enable(bullet.sprite);
+            game.physics.arcade.collide(bullet.sprite, enemy.sprite, () => {enemy.health--; bullet.sprite.kill();});
+            bullet.sprite.body.velocity.x = 0;
+            bullet.sprite.body.velocity.y = 0;
+                if (bullet.sprite.y > 0) {
+                    bullet.move();
                 } else {
-                    element.destroy();
+                    bullet.destroy();
                     player.bullets.splice(index, 1);
                     // This is done so the Garbage Collector can reclaim the instance
-                    element = undefined;
+                    bullet = undefined;
                 }
             });
         }

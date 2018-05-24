@@ -4,7 +4,7 @@ import Actor from "./actor";
 export default class Bullet extends Actor {
     // Methods
     move() {
-        this.sprite.y -= this.speed;
+        this.sprite.body.velocity.y -= this.speed;
     }
     destroy() {
         this.sprite.kill();

@@ -1,5 +1,9 @@
 import Actor from './actor';
-import { Sprite } from 'phaser-ce';
+import { Sprite, Game } from 'phaser-ce';
 
-export default interface Enemy extends Actor {
+export default class Enemy extends Actor {
+    // Methods
+    constructor(game: Game, sprite: Sprite, health: number, speed: number) {
+        super(game, sprite, health, speed);
+    }
 }
