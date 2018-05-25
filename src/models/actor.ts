@@ -16,12 +16,12 @@ export default abstract class Actor {
         this.speed = speed;
     }
 
+    update () {}
+
     move(x: number, y: number) {
         this.sprite.body.velocity.x += x;
         this.sprite.body.velocity.y += y;
     }
 
-    attack() {
-
-    }
+    attack() {}
 }

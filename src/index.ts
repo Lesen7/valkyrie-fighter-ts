@@ -7,10 +7,14 @@ import Enemy from './models/enemy';
 import ControlLayout from './models/input';
 import Bullet from './models/bullet';
 
+// Global groups
+let enemies: Enemy[];
+export {enemies};
+
 window.onload = () => {
     // Game configuration object
     const config = {
-        width: 600,
+        width: 800,
         height: 800,
         renderer: Phaser.AUTO,
         transparent: false,
@@ -62,8 +66,8 @@ window.onload = () => {
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         // Backgrounds tilesprites. Numbered according to 'z-index'
-        background0 = game.add.tileSprite(0, 0, 600, 800, 'stars_bg_0');
-        background1 = game.add.tileSprite(0, 0, 600, 800, 'stars_bg_1');
+        background0 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_0');
+        background1 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_1');
 
         // Input configuration
         const keysConfig = {
@@ -78,12 +82,8 @@ window.onload = () => {
 
         // Player initializations
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(game, playerSprite, 100, 250, 4, 11);
-        game.physics.arcade.enable(player.sprite);
-        player.sprite.body.allowGravity = false;
-        player.sprite.body.collideWorldBounds = true;
-        player.sprite.body.immovable = true;
-        player.bullets = [];
+        player = new Player(game, playerSprite, 100, 250, 6, 12, -7);
+
         // Player animations
         player.sprite.animations.add('turn_l', [0, 1], 10, true);
         player.sprite.animations.add('thrusters', [2, 3], 10, true);
@@ -92,12 +92,13 @@ window.onload = () => {
         // Enemy initializations
         enemySprite = game.add.sprite(game.world.width / 2, 10, 'reguld_sp');
         enemy = new Enemy(game, enemySprite, 10, 5);
-        game.physics.arcade.enable(enemy.sprite);
-        enemy.sprite.body.collideWorldBounds = true;
-        enemy.sprite.body.immovable = true;
+        enemies = [enemy];
     }
 
     function update() {
+        // Game object updates
+        player.update();
+
         // Collisions
         game.physics.arcade.collide(player.sprite, enemy.sprite);
 
@@ -129,24 +130,6 @@ window.onload = () => {
         }
         if (keys.fire.isDown) {
             player.attack();
-        }
-
-        // Move the player bullets until they reach the edge of the screen
-        if (player.bullets != null) {
-            player.bullets.forEach((bullet, index) => {    
-            game.physics.arcade.enable(bullet.sprite);
-            game.physics.arcade.collide(bullet.sprite, enemy.sprite, () => {enemy.health--; bullet.sprite.kill();});
-            bullet.sprite.body.velocity.x = 0;
-            bullet.sprite.body.velocity.y = 0;
-                if (bullet.sprite.y > 0) {
-                    bullet.move();
-                } else {
-                    bullet.destroy();
-                    player.bullets.splice(index, 1);
-                    // This is done so the Garbage Collector can reclaim the instance
-                    bullet = undefined;
-                }
-            });
         }
     }
 };
