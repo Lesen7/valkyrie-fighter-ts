@@ -78,7 +78,7 @@ window.onload = () => {
 
         // Player initializations
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(game, playerSprite, 100, 250, 5, 11);
+        player = new Player(game, playerSprite, 100, 250, 4, 11);
         game.physics.arcade.enable(player.sprite);
         player.sprite.body.allowGravity = false;
         player.sprite.body.collideWorldBounds = true;
