@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "start": "node dist/bundle.js",
-    "dev": "webpack-dev-server --mode development",
+    "dev": "webpack-dev-server --mode development --cache false --port 8181",
     "lint": "tslint -p ./tsconfig.json"
   },
   "repository": {
