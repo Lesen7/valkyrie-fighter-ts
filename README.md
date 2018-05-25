@@ -2,7 +2,7 @@
 ![Macross Logo](/img/macross_logo.png "Logo")
 
 
-**Jugar:** https://lesen7.github.io/valkyrie-fighter/
+**Jugar:** https://lesen7.github.io/valkyrie-fighter-ts/
 
 
 ## **CONTROLES** ##
