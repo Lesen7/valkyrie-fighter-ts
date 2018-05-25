@@ -49,7 +49,7 @@ window.onload = () => {
     // Global Player variables
     let player: Player;
     let playerSprite: Phaser.Sprite;
-    let playerBullet: Bullet;
+    let playerBullet: Phaser.Sprite;
 
     function create() {
         // Input configuration
@@ -65,8 +65,7 @@ window.onload = () => {
 
         // Player initialization
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(100, 5, playerSprite);
-        playerBullet.sprite = game.add.sprite(player.positionX, player.positionY, 'player_bullet');
+        player = new Player(100, 5, playerSprite);game.add.sprite(player.positionX, player.positionY, 'player_bullet');
 
         // Player animations
         player.sprite.animations.add('turn_l', [0, 1], 10, true);
