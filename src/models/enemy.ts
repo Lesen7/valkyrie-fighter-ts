@@ -18,7 +18,7 @@ export default class Enemy extends Actor {
     takeDamage(damage) {
         this.sprite.tint = Phaser.Color.RED;
         this.tintTimer = 2;
-       // this.health -= damage;
+        this.health -= damage;
     }
 
     update() {

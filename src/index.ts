@@ -86,7 +86,7 @@ window.onload = () => {
 
         // Enemy initializations
         enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move');
-        enemy = new Enemy(game, enemySprite, 3, 5);
+        enemy = new Enemy(game, enemySprite, 10, 5);
         enemies = [enemy];
     }
 
