@@ -14,8 +14,8 @@ export {enemies};
 window.onload = () => {
     // Game configuration object
     const config = {
-        width: 800,
-        height: 800,
+        width: 650,
+        height: 650,
         renderer: Phaser.AUTO,
         transparent: false,
         antialias: false,

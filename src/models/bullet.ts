@@ -23,7 +23,7 @@ export default class Bullet extends Actor {
     move() {
         this.sprite.body.velocity.y -= this.speed;
     }
-    
+
     update () {
         enemies.forEach((enemy, index) => {
             this.game.physics.arcade.collide(this.sprite, enemy.sprite, () => { this.destroy(), this.dealDamage(enemy); });

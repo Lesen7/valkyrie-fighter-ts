@@ -25,11 +25,9 @@ export default abstract class Actor {
 
     takeDamage(damage: number) {
         this.health -= damage;
-        console.log(this.health);
     }
 
     destroy() {
-        console.log('dead¿');
         this.sprite.kill();
     }
 
