@@ -47,7 +47,7 @@ export default class Player extends Actor {
         if (this.bulletTimer <= 0 || this.bulletTimer == undefined)
         {
             this.bulletTimer = this.fireRate;
-            this.bullets.push(new Bullet(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'player_bullet'), 1, 800));
+            this.bullets.push(new Bullet(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'player_bullet'), 1, 800, 1));
         }
     }
 }

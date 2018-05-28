@@ -16,6 +16,10 @@ export default abstract class Actor {
         this.speed = speed;
     }
 
+    destroy() {
+        this.sprite.kill();
+    }
+
     update () {}
 
     move(x: number, y: number) {

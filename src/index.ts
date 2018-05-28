@@ -40,8 +40,7 @@ window.onload = () => {
         game.load.spritesheet('vf1_sp_sh', 'assets/sprites/vf1/vf1_sp_sh.png', 32, 37);
 
         // Enemy sprites/images
-        game.load.spritesheet('reguld_sp', 'assets/sprites/reguld/reguld_sp.png', 32, 37);
-        game.load.spritesheet('reguld_move', 'assets/sprites/reguld/reguld_move.png', 32, 37);
+        game.load.spritesheet('pod_move', 'assets/sprites/reguld/reguld_move.png', 33, 37);
     }
 
     // Global input variables
@@ -90,7 +89,7 @@ window.onload = () => {
         player.sprite.animations.add('turn_r', [4, 5], 10, true);
 
         // Enemy initializations
-        enemySprite = game.add.sprite(game.world.width / 2, 10, 'reguld_sp');
+        enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move');
         enemy = new Enemy(game, enemySprite, 10, 5);
         enemies = [enemy];
     }
@@ -98,6 +97,7 @@ window.onload = () => {
     function update() {
         // Game object updates
         player.update();
+        enemy.update();
 
         // Collisions
         game.physics.arcade.collide(player.sprite, enemy.sprite);
