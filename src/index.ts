@@ -81,55 +81,27 @@ window.onload = () => {
 
         // Player initializations
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(game, playerSprite, 100, 250, 6, 12, -7);
+        player = new Player(game, keys, playerSprite, 100, 250, 6, 12, -7);
 
-        // Player animations
-        player.sprite.animations.add('turn_l', [0, 1], 10, true);
-        player.sprite.animations.add('thrusters', [2, 3], 10, true);
-        player.sprite.animations.add('turn_r', [4, 5], 10, true);
 
         // Enemy initializations
         enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move');
-        enemy = new Enemy(game, enemySprite, 10, 5);
+        enemy = new Enemy(game, enemySprite, 3, 5);
         enemies = [enemy];
     }
 
     function update() {
         // Game object updates
         player.update();
-        enemy.update();
+        enemies.forEach((enemy, index) => {
+            enemy.update();
+        });
 
         // Collisions
-        game.physics.arcade.collide(player.sprite, enemy.sprite);
+        game.physics.arcade.collide(player.sprite, enemy.sprite, () => {player.takeDamage(1)});
 
         // Scroll backgrounds
         background0.tilePosition.y += 0.4;
         background1.tilePosition.y += 0.5;
-
-        // TODO: Move to player update
-        player.sprite.body.velocity.x = 0;
-        player.sprite.body.velocity.y = 0;
-
-        // Player input
-        if (keys.left.isDown) {
-            player.move(-player.speed, 0);
-            player.sprite.animations.play('turn_l');
-        } else if (keys.right.isDown) {
-            player.move(player.speed, 0);
-            player.sprite.animations.play('turn_r');
-        } else {
-            player.sprite.animations.play('thrusters');
-            player.sprite.body.velocity.x = 0;
-        }
-        if (keys.up.isDown) {
-            player.move(0, -player.speed);
-        } else if (keys.down.isDown) {
-            player.move(0, player.speed);
-        } else {
-            player.sprite.body.velocity.y = 0;
-        }
-        if (keys.fire.isDown) {
-            player.attack();
-        }
     }
 };

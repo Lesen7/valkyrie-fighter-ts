@@ -12,14 +12,13 @@ export default class Enemy extends Actor {
         game.physics.arcade.enable(this.sprite);
         this.sprite.body.collideWorldBounds = true;
         this.sprite.body.immovable = true;
-        this.sprite.animations.add('move', null, 10, true);
+        this.sprite.animations.add('move', [0, 1], 10, true);
     }
 
     takeDamage(damage) {
         this.sprite.tint = Phaser.Color.RED;
         this.tintTimer = 2;
-
-        this.health-= damage;
+       // this.health -= damage;
     }
 
     update() {
@@ -30,7 +29,7 @@ export default class Enemy extends Actor {
             this.tintTimer--;
         }
         this.sprite.animations.play('move');
-        if (this.health == 0) {
+        if (this.health <= 0) {
             this.destroy();
         }
     }
