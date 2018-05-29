@@ -6,6 +6,7 @@ export default class Enemy extends Actor {
     // Properties
     tintTimer: number;
     score: number;
+    difficulty: number;
 
     // Methods
     constructor(game: Game, gameMaster: GameMaster, sprite: Sprite, health: number, speed: number) {

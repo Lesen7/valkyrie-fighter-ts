@@ -7,6 +7,8 @@ import Enemy from './models/enemy';
 import ControlLayout from './models/input';
 import Bullet from './models/bullet';
 import GameMaster from './models/gameMaster';
+import GamePhase from './models/gamePhase';
+import SpawnPoint from './models/spawnPoint';
 
 // Global groups
 let enemies: Enemy[];
@@ -56,6 +58,8 @@ window.onload = () => {
     let enemySprite: Phaser.Sprite;
 
     // TODO: Global custom actor groups
+    let gamePhases: GamePhase[];
+    let spawnPoints: SpawnPoint[];
     let gameMaster: GameMaster;
 
     // Background images
@@ -85,11 +89,29 @@ window.onload = () => {
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
         player = new Player(game, gameMaster, keys, playerSprite, 100, 250, 6, 12, -7);
 
+        // Creating the gameMaster object
+        gamePhases = [
+            new GamePhase('main menu', -2),
+            new GamePhase('pause menu', -1),
+            new GamePhase('scramble', 0),
+            new GamePhase('combat D', 1),
+            new GamePhase('combat C', 2),
+            new GamePhase('combat B', 3),
+            new GamePhase('combat A', 4),
+            new GamePhase('combat S', 5),
+            new GamePhase('combat SS', 6),
+        ];
+        spawnPoints = [
+            new SpawnPoint(game.add.sprite(game.width / 2, -10), 1)
+
+        ];
+        gameMaster = new GameMaster(player, gamePhases, spawnPoints);
+
 
         // Enemy initializations
         enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move');
         enemy = new Enemy(game, gameMaster, enemySprite, 10, 5);
-        enemies = [enemy];
+        gameMaster.enemies.push(enemy);
     }
 
     function update() {
