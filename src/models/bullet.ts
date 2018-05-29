@@ -2,14 +2,15 @@ import { Sprite, Game } from "phaser-ce";
 import Actor from "./actor";
 import { enemies } from '../index';
 import * as Phaser from 'phaser-ce';
+import GameMaster from './gameMaster';
 
 export default class Bullet extends Actor {
     // Properties
     damage: number;
 
     // Methods
-    constructor(game: Game, sprite: Sprite, health: number, speed: number, damage: number) {
-        super(game, sprite, health, speed);
+    constructor(game: Game, gameMaster: GameMaster, sprite: Sprite, health: number, speed: number, damage: number) {
+        super(game, gameMaster, sprite, health, speed);
         this.damage = damage;
         this.sprite.checkWorldBounds = true;
         this.sprite.outOfBoundsKill = true;

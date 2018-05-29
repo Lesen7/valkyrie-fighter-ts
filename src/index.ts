@@ -6,6 +6,7 @@ import Player from './models/player';
 import Enemy from './models/enemy';
 import ControlLayout from './models/input';
 import Bullet from './models/bullet';
+import GameMaster from './models/gameMaster';
 
 // Global groups
 let enemies: Enemy[];
@@ -55,6 +56,7 @@ window.onload = () => {
     let enemySprite: Phaser.Sprite;
 
     // TODO: Global custom actor groups
+    let gameMaster: GameMaster;
 
     // Background images
     let background0: Phaser.TileSprite;
@@ -81,12 +83,12 @@ window.onload = () => {
 
         // Player initializations
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(game, keys, playerSprite, 100, 250, 6, 12, -7);
+        player = new Player(game, gameMaster, keys, playerSprite, 100, 250, 6, 12, -7);
 
 
         // Enemy initializations
         enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move');
-        enemy = new Enemy(game, enemySprite, 10, 5);
+        enemy = new Enemy(game, gameMaster, enemySprite, 10, 5);
         enemies = [enemy];
     }
 
