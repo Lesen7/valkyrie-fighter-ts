@@ -9,10 +9,10 @@ import Bullet from './models/bullet';
 import GameMaster from './models/gameMaster';
 import GamePhase from './models/gamePhase';
 import SpawnPoint from './models/spawnPoint';
+import { spawn } from 'child_process';
 
-// Global groups
-let enemies: Enemy[];
-export {enemies};
+let gameMaster = new GameMaster();
+export default gameMaster;
 
 window.onload = () => {
     // Game configuration object
@@ -60,7 +60,8 @@ window.onload = () => {
     // TODO: Global custom actor groups
     let gamePhases: GamePhase[];
     let spawnPoints: SpawnPoint[];
-    let gameMaster: GameMaster;
+    let scoreText: Phaser.Text;
+    let style;
 
     // Background images
     let background0: Phaser.TileSprite;
@@ -73,6 +74,13 @@ window.onload = () => {
         // Backgrounds tilesprites. Numbered according to 'z-index'
         background0 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_0');
         background1 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_1');
+
+        scoreText = game.add.text(150, 20, "Score: 000000000", {
+            font: "30px pixel",
+            fill: "#ffffff",
+            align: "center"
+        });
+        scoreText.anchor.setTo(0.5, 0.5);
 
         // Input configuration
         const keysConfig = {
@@ -87,7 +95,7 @@ window.onload = () => {
 
         // Player initializations
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(game, gameMaster, keys, playerSprite, 100, 250, 6, 12, -7);
+        player = new Player(game, keys, playerSprite, 100, 250, 6, 12, -7);
 
         // Creating the gameMaster object
         gamePhases = [
@@ -102,27 +110,36 @@ window.onload = () => {
             new GamePhase('combat SS', 6),
         ];
         spawnPoints = [
-            new SpawnPoint(game.add.sprite(game.width / 2, -10), 1)
-
+            new SpawnPoint(game, game.add.sprite(game.width / 2, 5), 300),
+            new SpawnPoint(game, game.add.sprite(100, 5), 300),
+            new SpawnPoint(game, game.add.sprite(game.width - 120, 5), 300)
         ];
-        gameMaster = new GameMaster(player, gamePhases, spawnPoints);
+        gameMaster.addPlayer(player);
+        gameMaster.addGamePhases(gamePhases);
+        gameMaster.addSpawnPoints(spawnPoints);
+        gameMaster.initialize();
 
+        gameMaster.enemies = [(new Enemy(game, gameMaster, enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move'), 10, 50, 100))];
 
-        // Enemy initializations
+        // Enemy initializations 
+        /*
         enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move');
         enemy = new Enemy(game, gameMaster, enemySprite, 10, 5);
         gameMaster.enemies.push(enemy);
+        */
     }
 
     function update() {
         // Game object updates
+        gameMaster.update();
         player.update();
-        enemies.forEach((enemy, index) => {
-            enemy.update();
-        });
+        if(gameMaster.score == 0) {
+            scoreText.setText("Score: 000000000");
+        } else {
+            scoreText.setText('Score: ' + gameMaster.score);
+        }
 
         // Collisions
-        game.physics.arcade.collide(player.sprite, enemy.sprite, () => {player.takeDamage(1)});
 
         // Scroll backgrounds
         background0.tilePosition.y += 0.4;

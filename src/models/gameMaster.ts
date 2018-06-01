@@ -15,9 +15,35 @@ export default class GameMaster {
     score: number;
 
     // Methods
-    constructor(player: Player, gamePhases: GamePhase[], spawnPoints: SpawnPoint[]) {
+    constructor() {
+        this.score = 0;
+    }
+
+    addPlayer (player: Player) {
         this.player = player;
+    }
+
+    addGamePhases (gamePhases: GamePhase[]) {
         this.gamePhases = gamePhases;
-        this.spawnPoints = spawnPoints;
+    }
+    addSpawnPoints (spawnPoints: SpawnPoint[]) {
+        this.spawnPoints = spawnPoints
+    }
+
+    initialize() {
+        this.currentPhase = this.gamePhases[3];
+    }
+
+    update () {
+        // Update the game according to game pahses
+        if (this.currentPhase.maxDifficulty == 1) {
+            this.player.update;
+            this.enemies.forEach((enemy, index) => {
+                enemy.update();
+            });
+        }
+        this.spawnPoints.forEach((spawnPoint, index) => {
+            spawnPoint.update();
+        });
     }
 }

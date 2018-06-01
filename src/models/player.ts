@@ -1,10 +1,10 @@
 import Actor from './actor';
 import { Sprite, Game } from 'phaser-ce';
 import Bullet from './bullet';
-import {enemies} from '../index';
 import ControlLayout from './input';
 import gamePhase from './gamePhase';
 import GameMaster from './gameMaster';
+import gameMaster from '../index';
 
 export default class Player extends Actor {
     /// Properties
@@ -18,8 +18,8 @@ export default class Player extends Actor {
     bullets: Bullet[];
 
     // Methods
-    constructor(game: Game, gameMaster: GameMaster, controls: ControlLayout, sprite: Sprite, health: number, speed: number, fireRate: number, shootOffsetX?: number, shootOffsetY?: number) {
-        super(game, gameMaster, sprite, health, speed);
+    constructor(game: Game, controls: ControlLayout, sprite: Sprite, health: number, speed: number, fireRate: number, shootOffsetX?: number, shootOffsetY?: number) {
+        super(game, sprite, health, speed);
         this.keys = controls;
         this.fireRate = fireRate;
         this.shootOffsetX = shootOffsetX;
@@ -41,7 +41,7 @@ export default class Player extends Actor {
         if (this.bulletTimer <= 0 || this.bulletTimer == undefined)
         {
             this.bulletTimer = this.fireRate;
-            this.bullets.push(new Bullet(this.game, this.gameMaster, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'player_bullet'), 1, 800, 1));
+            this.bullets.push(new Bullet(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'player_bullet'), 1, 800, 1));
         }
     }
     
