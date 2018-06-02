@@ -25,7 +25,7 @@
 
 ![VF1-A](/img/vf1a.png "Caza VF1-A")
 
-Controlamos un caza veloz y versátil caza VF1-A y el objetivo es simplemente conseguir la puntuación más alta, interceptando a tantos invasores Zentradi como podamos en un nivel infinito que solo termina cuando morimos. Los enemigos aparecen desde el borde superior a intervalos y posiciones aleatorias. Mientras más alta sea la "fase", más rápido será el scrolling y más enemigos aparecerán (es decir, la dificultad aumentará), pero también otorgaran más puntos al matarlos. Los jugadores pueden elegir en qué fase empezar, y recibirán una bonificación inicial de puntos dependiendo de la fase que elijan. Irán progresando apartir del nivel inicial.
+Controlamos un veloz y versátil caza VF1-A y el objetivo es simplemente conseguir la puntuación más alta, interceptando a tantos invasores Zentradi como podamos en un nivel infinito que solo termina cuando morimos. Los enemigos aparecen desde el borde superior a intervalos y posiciones aleatorias. Mientras más alta sea la "fase", más rápido será el scrolling y más enemigos aparecerán (es decir, la dificultad aumentará), pero también otorgaran más puntos al matarlos. Los jugadores pueden elegir en qué fase empezar, y recibirán una bonificación inicial de puntos dependiendo de la fase que elijan. Irán progresando apartir del nivel inicial.
 
 **Fases:**
 * D: La fase más baja. Para principiantes.
