@@ -19,22 +19,30 @@ export default class GameMaster {
         this.score = 0;
     }
 
-    addPlayer (player: Player) {
+    addPlayer(player: Player) {
         this.player = player;
     }
 
-    addGamePhases (gamePhases: GamePhase[]) {
+    addGamePhases(gamePhases: GamePhase[]) {
         this.gamePhases = gamePhases;
     }
-    addSpawnPoints (spawnPoints: SpawnPoint[]) {
+    addSpawnPoints(spawnPoints: SpawnPoint[]) {
         this.spawnPoints = spawnPoints
     }
 
     initialize() {
-        this.currentPhase = this.gamePhases[3];
+        this.currentPhase = this.getPhase("combat D");
     }
 
-    update () {
+    getPhase(selectPhase: string | number) {
+        if(typeof selectPhase == "string") {
+            return this.gamePhases.filter(phase => selectPhase == phase.name)[0];
+        } else {
+            return this.gamePhases.filter(phase => selectPhase == phase.maxDifficulty)[0];
+        }
+    }
+
+    update() {
         // Update the game according to game pahses
         if (this.currentPhase.maxDifficulty == 1) {
             this.player.update;

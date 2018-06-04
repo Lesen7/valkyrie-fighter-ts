@@ -1,6 +1,7 @@
 import { Sprite, Game } from "phaser-ce";
 import { spawn } from 'child_process';
 import Enemy from './enemy';
+import Pod from "./pod";
 import Actor from './actor';
 import gameMaster from '../index';
 
@@ -29,7 +30,7 @@ export default class SpawnPoint extends Actor {
     spawn () {
         this.currentFrequency = this.randomize(100, this.maxFrequency);
         this.counter = this.currentFrequency;
-        gameMaster.enemies.push(new Enemy(this.game, this.gameMaster, this.game.add.sprite(this.sprite.x, this.sprite.y, 'pod_move'), 3, 50, 100));
+        gameMaster.enemies.push(new Pod(this.game, this.gameMaster, this.game.add.sprite(this.sprite.x, this.sprite.y, 'pod_move')));
     }
 
     update () {

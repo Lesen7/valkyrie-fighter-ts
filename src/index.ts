@@ -4,12 +4,12 @@ import * as Phaser from 'phaser-ce';
 import Actor from './models/actor';
 import Player from './models/player';
 import Enemy from './models/enemy';
+import Pod from './models/pod';
 import ControlLayout from './models/input';
 import Bullet from './models/bullet';
 import GameMaster from './models/gameMaster';
 import GamePhase from './models/gamePhase';
 import SpawnPoint from './models/spawnPoint';
-import { spawn } from 'child_process';
 
 let gameMaster = new GameMaster();
 export default gameMaster;
@@ -67,7 +67,12 @@ window.onload = () => {
     let background0: Phaser.TileSprite;
     let background1: Phaser.TileSprite;
 
+    // Font variables
+    let font: Phaser.RetroFont;
+
     function create() {
+        font = game.add.retroFont('pressStart', 31, 25, Phaser.RetroFont.TEXT_SET6, 10, 1, 1);
+
         // Game variable initializations
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -76,7 +81,7 @@ window.onload = () => {
         background1 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_1');
 
         scoreText = game.add.text(150, 20, "Score: 000000000", {
-            font: "30px pixel",
+            font: "30px monospace",
             fill: "#ffffff",
             align: "center"
         });
@@ -99,8 +104,9 @@ window.onload = () => {
 
         // Creating the gameMaster object
         gamePhases = [
-            new GamePhase('main menu', -2),
-            new GamePhase('pause menu', -1),
+            new GamePhase('pause menu', -3),
+            new GamePhase('advance', -2),
+            new GamePhase('main menu', -1),
             new GamePhase('scramble', 0),
             new GamePhase('combat D', 1),
             new GamePhase('combat C', 2),
@@ -119,14 +125,7 @@ window.onload = () => {
         gameMaster.addSpawnPoints(spawnPoints);
         gameMaster.initialize();
 
-        gameMaster.enemies = [(new Enemy(game, gameMaster, enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move'), 10, 50, 100))];
-
-        // Enemy initializations 
-        /*
-        enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move');
-        enemy = new Enemy(game, gameMaster, enemySprite, 10, 5);
-        gameMaster.enemies.push(enemy);
-        */
+        gameMaster.enemies = [(new Pod(game, gameMaster, enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move')))];
     }
 
     function update() {
@@ -134,13 +133,10 @@ window.onload = () => {
         gameMaster.update();
         player.update();
         if(gameMaster.score == 0) {
-            scoreText.setText("Score: 000000000");
+            scoreText.setText("Score: 000");
         } else {
             scoreText.setText('Score: ' + gameMaster.score);
         }
-
-        // Collisions
-
         // Scroll backgrounds
         background0.tilePosition.y += 0.4;
         background1.tilePosition.y += 0.5;

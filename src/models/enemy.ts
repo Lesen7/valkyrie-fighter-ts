@@ -3,7 +3,7 @@ import { Sprite, Game } from 'phaser-ce';
 import GameMaster from './gameMaster';
 import gameMaster from '../index';
 
-export default class Enemy extends Actor {
+export default abstract class Enemy extends Actor {
     // Properties
     tintTimer: number;
     score: number;
@@ -11,7 +11,7 @@ export default class Enemy extends Actor {
     destroyed: boolean;
 
     // Methods
-    constructor(game: Game, gameMaster: GameMaster, sprite: Sprite, health: number, speed: number, score: number) {
+    constructor(game: Game, gameMaster: GameMaster, sprite: Sprite, health?: number, speed?: number, score?: number) {
         super(game, sprite, health, speed);
         this.score = score;
         this.destroyed = false;
@@ -33,6 +33,7 @@ export default class Enemy extends Actor {
     destroy() {
         this.sprite.kill();
         gameMaster.score += this.score;
+        this.destroyed = true;
     }
 
     update() {
@@ -44,9 +45,8 @@ export default class Enemy extends Actor {
                 this.tintTimer--;
             }
             this.sprite.animations.play('move');
-            if(this.health <= 0) {
+            if(this.health <= 0 || this.sprite.position.y <= -this.game.height) {
                 this.destroy();
-                this.destroyed = true;
             }
             this.move();
         }
