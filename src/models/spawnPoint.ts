@@ -8,18 +8,19 @@ import gameMaster from '../index';
 export default class SpawnPoint extends Actor {
     // Properties
     sprite: Sprite;
-    maxFrequency: number;
+    frequencyMod: number;
+    top: number;
     currentFrequency: number;
     counter: number;
-    
 
     // Methods
-    constructor(game: Game, sprite: Sprite, maxFrequency: number) {
+    constructor(game: Game, sprite: Sprite, frequencyMod: number) {
         super(game, sprite);
         this.sprite = sprite;
-        this.currentFrequency = maxFrequency;
-        this.maxFrequency = maxFrequency;
-        this.counter = this.maxFrequency;
+        this.frequencyMod = frequencyMod;
+        this.currentFrequency = frequencyMod;
+        this.top = 100;
+        this.counter = 0;
     }
 
     
@@ -27,17 +28,18 @@ export default class SpawnPoint extends Actor {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    spawn () {
-        this.currentFrequency = this.randomize(100, this.maxFrequency);
-        this.counter = this.currentFrequency;
+    spawn() {
+        this.currentFrequency = this.randomize(1, this.top);
+        this.counter = 0;
         gameMaster.enemies.push(new Pod(this.game, this.gameMaster, this.game.add.sprite(this.sprite.x, this.sprite.y, 'pod_move')));
     }
 
-    update () {
-        if (this.counter <= 0) {
+    update() {
+        console.log(this.currentFrequency);
+        if (this.counter >= this.top) {
             this.spawn();
         } else {
-            this.counter--;
+            this.counter += this.currentFrequency;
         }
     }
 }
