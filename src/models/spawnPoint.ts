@@ -1,5 +1,5 @@
 import { Sprite, Game } from "phaser-ce";
-import { spawn } from 'child_process';
+import * as rand from "../utils/randUtils";
 import Enemy from './enemy';
 import Pod from "./pod";
 import Actor from './actor';
@@ -8,38 +8,39 @@ import gameMaster from '../index';
 export default class SpawnPoint extends Actor {
     // Properties
     sprite: Sprite;
-    frequencyMod: number;
+    frequency: number;
     top: number;
-    currentFrequency: number;
     counter: number;
 
     // Methods
-    constructor(game: Game, sprite: Sprite, frequencyMod: number) {
+    constructor(game: Game, sprite: Sprite, frequency: number) {
         super(game, sprite);
         this.sprite = sprite;
-        this.frequencyMod = frequencyMod;
-        this.currentFrequency = frequencyMod;
+        this.frequency = frequency;
         this.top = 100;
         this.counter = 0;
     }
 
-    
-    randomize(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+    roll() {
+        let result = Math.random();
+        if(result < 0.6) {
+            this.counter = 0;
+            return;
+        } else if(result > 0.6) {
+            this.spawn();
+        }
     }
 
     spawn() {
-        this.currentFrequency = this.randomize(1, this.top);
         this.counter = 0;
         gameMaster.enemies.push(new Pod(this.game, this.gameMaster, this.game.add.sprite(this.sprite.x, this.sprite.y, 'pod_move')));
     }
 
     update() {
-        console.log(this.currentFrequency);
         if (this.counter >= this.top) {
-            this.spawn();
+            this.roll();
         } else {
-            this.counter += this.currentFrequency;
+            this.counter += this.frequency;
         }
     }
 }
