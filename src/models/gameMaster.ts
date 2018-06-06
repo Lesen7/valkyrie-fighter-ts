@@ -5,6 +5,7 @@ import GamePhase from './gamePhase';
 import ControlLayout from './input';
 import { spawn } from 'child_process';
 import Effect from './effect';
+import { printAtInterval } from '../utils/printUtils';
 
 export default class GameMaster {
     // Properties
@@ -82,5 +83,6 @@ export default class GameMaster {
             });
             this.cleanUp();
         }
+        printAtInterval(20, 'Enemies: ' + this.enemies);
     }
 }
