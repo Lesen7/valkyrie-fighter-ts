@@ -30,6 +30,7 @@ export default abstract class Enemy extends Actor {
     /**
      * 
      * @param game The Phaser game the sprite will be added to.
+     * @param gameMaster The Game Master the object will be added to.
      * @param sprite The sprite for the enemy.
      * @param health Defines how much health the enemy will have.
      * @param speed Defines how fast the enemy will move.
