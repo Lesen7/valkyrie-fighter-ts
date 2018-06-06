@@ -4,13 +4,11 @@
 * @param text the text to be printed.
 */
 export function printAtInterval(interval: number, text: string) {
-    let counter: number;
-    if(counter == undefined) {
-        counter = 0;
-    } else if(counter < interval) {
-        counter ++;
-    } else {
+    let counter = 0;
+    if (counter >= interval) {
         console.log(text);
-        counter = 0;
+    }
+    while(counter < interval) {
+        counter ++;
     }
 }
