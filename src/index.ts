@@ -35,6 +35,9 @@ window.onload = () => {
     const game = new Phaser.Game(config);
 
     function preload() {
+        // Fonts
+        game.load.bitmapFont('fipps', 'assets/fonts/fipps.png', 'assets/fonts/fipps.xml');
+
         // Background images
         game.load.image('stars_bg_0', 'assets/backgrounds/stars_bg_0.png');
         game.load.image('stars_bg_1', 'assets/backgrounds/stars_bg_1.png');
@@ -62,19 +65,15 @@ window.onload = () => {
     // TODO: Global custom actor groups
     let gamePhases: GamePhase[];
     let spawnPoints: SpawnPoint[];
-    let scoreText: Phaser.Text;
+    let scoreText: Phaser.BitmapText;
+    let scoreMessage: string;
     let style;
 
     // Background images
     let background0: Phaser.TileSprite;
     let background1: Phaser.TileSprite;
 
-    // Font variables
-    let font: Phaser.RetroFont;
-
     function create() {
-        font = game.add.retroFont('pressStart', 31, 25, Phaser.RetroFont.TEXT_SET6, 10, 1, 1);
-
         // Game variable initializations
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -82,11 +81,8 @@ window.onload = () => {
         background0 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_0');
         background1 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_1');
 
-        scoreText = game.add.text(150, 20, "Score: 000000000", {
-            font: "30px monospace",
-            fill: "#ffffff",
-            align: "center"
-        });
+        scoreMessage = "Score\n".split('').join('\n');
+        scoreText = game.add.bitmapText(game.width - 20, game.height / 2, 'fipps', scoreMessage, 25);
         scoreText.anchor.setTo(0.5, 0.5);
 
         // Input configuration
@@ -131,14 +127,15 @@ window.onload = () => {
         // Game object updates
         gameMaster.update();
         player.update();
-        if(gameMaster.score == 0) {
-            scoreText.setText("Score: 000");
-        } else {
-            scoreText.setText('Score: ' + gameMaster.score);
-        }
+        scoreText.text = scoreMessage + leftPad(gameMaster.score.toString(), 8, "0").split('').join('\n');
         
         // Scroll backgrounds
         background0.tilePosition.y += 0.4;
         background1.tilePosition.y += 0.5;
+    }
+
+    function leftPad(text: string, pad: number, char='0'): string {
+        pad = pad - text.length + 1;
+        return pad > 0 ? new Array(pad).join(char) + text : text;
     }
 };
