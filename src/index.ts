@@ -140,6 +140,7 @@ window.onload = () => {
         } else {
             scoreText.setText('Score: ' + gameMaster.score);
         }
+        
         // Scroll backgrounds
         background0.tilePosition.y += 0.4;
         background1.tilePosition.y += 0.5;
