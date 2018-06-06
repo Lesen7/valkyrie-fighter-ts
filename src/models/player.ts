@@ -7,17 +7,44 @@ import GameMaster from './gameMaster';
 import gameMaster from '../index';
 
 export default class Player extends Actor {
-    /// Properties
-    // The lower the number, the higher the rate
+    /**
+     * The control layout for the player.
+     */
     keys: ControlLayout;
+    /**
+     * The rate at which the player fires.
+     */
     fireRate: number;
+    /**
+     * The horizontal offset at which the bullets will be created.
+     */
     shootOffsetX: number;
+    /**
+     * The vertical offset at which the bullets will be created.
+     */
     shootOffsetY: number;
-    // Private variable to count down the firing rate
+    /**
+     * The variable that counts down the firing rate.
+     */
     private bulletTimer: number;
+    /**
+     * A pool of all existing player bullets.
+     */
     bullets: Bullet[];
 
-    // Methods
+    /**
+     * A player object that can be controlled through user input.
+     * The physics properties of the player will be initialized upon creation.
+     * Additionally, player animations will be created.
+     * @param game The Phaser game the sprite will be added to.
+     * @param controls The control layout for the player.
+     * @param sprite The sprite for the player.
+     * @param health Defines how much health the player will have.
+     * @param speed Defines how fast the player will move.
+     * @param fireRate The horizontal offset at which the bullets will be created.
+     * @param shootOffsetX The vertical offset at which the bullets will be created.
+     * @param shootOffsetY The variable that counts down the firing rate.
+     */
     constructor(game: Game, controls: ControlLayout, sprite: Sprite, health: number, speed: number, fireRate: number, shootOffsetX?: number, shootOffsetY?: number) {
         super(game, sprite, health, speed);
         this.keys = controls;
@@ -25,7 +52,6 @@ export default class Player extends Actor {
         this.shootOffsetX = shootOffsetX;
         this.shootOffsetY = shootOffsetY;
         this.bullets = [];
-
         game.physics.arcade.enable(this.sprite);
         this.sprite.body.allowGravity = false;
         this.sprite.body.collideWorldBounds = true;
@@ -37,6 +63,9 @@ export default class Player extends Actor {
         this.sprite.animations.add('turn_r', [4, 5], 10, true);
     }
 
+    /**
+     * Fires a bullet at the corresponding firing rate.
+     */
     attack() {
         if (this.bulletTimer <= 0 || this.bulletTimer == undefined)
         {
@@ -45,10 +74,14 @@ export default class Player extends Actor {
         }
     }
     
+    /**
+     * Checks for user input to make the player act accordingly.
+     * Additionally, handles the timer for the firing rate and cancels the acceleration of the player and its bullets.
+     * The bullets are destroyed when they leave the screen.
+     */
     update() {
-        if (this.health <= 0) {
-            this.destroy();
-        }
+        super.update();
+
         // Count down the fire rate counter
         if (this.bulletTimer >= 0) {
             this.bulletTimer--;
@@ -59,6 +92,7 @@ export default class Player extends Actor {
                 bullet.sprite.body.velocity.y = 0;
                 bullet.update();
                 if (bullet.sprite.y < 0) {
+                    bullet.destroy();
                     this.bullets.splice(index, 1);
                 }
             });
