@@ -40,6 +40,7 @@ export default abstract class Enemy extends Actor {
         this.gameMaster = gameMaster;
         this.score = score;
         this.destroyed = false;
+        this.destroyedEffect = 'explosion_sm';
         game.physics.arcade.enable(this.sprite);
         this.sprite.body.immovable = true;
         this.sprite.animations.add('move', [0, 1], 10, true);
