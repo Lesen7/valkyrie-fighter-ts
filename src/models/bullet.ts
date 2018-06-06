@@ -8,7 +8,14 @@ export default class Bullet extends Actor {
     // Properties
     damage: number;
 
-    // Methods
+    /**
+    * Creates a bullet object.
+    * @param game The Phaser game the sprite will be added to.
+    * @param sprite The sprite for the bullet.
+    * @param health Essentially defines how many enemies the bullet can hit before being destroyed.
+    * @param speed Defines how fast the bullet will move.
+    * @param damage Defines how much damage the bullet will deal on impact.
+    */
     constructor(game: Game, sprite: Sprite, health: number, speed: number, damage: number) {
         super(game, sprite, health, speed);
         this.damage = damage;
@@ -17,17 +24,29 @@ export default class Bullet extends Actor {
         game.physics.arcade.enable(this.sprite);
     }
 
+    /**
+    * Substracts the health of another object by the damage number of this object.
+    * @param object The object whose health will be reduced.
+    */
     dealDamage(object) {
         object.takeDamage(this.damage);
     }
 
+    /**
+    * Moves the bullet upwards across the game world.
+    */
     move() {
         this.sprite.body.velocity.y -= this.speed;
     }
 
+    /**
+    * Moves and checks for collision with existing enemies.
+    * Takes damage and deals damage to enemies it collides with.
+    */
     update () {
+        super.update();
         gameMaster.enemies.forEach((enemy, index) => {
-            this.game.physics.arcade.collide(this.sprite, enemy.sprite, () => { this.destroy(), this.dealDamage(enemy); });
+            this.game.physics.arcade.collide(this.sprite, enemy.sprite, () => { this.takeDamage(1), this.dealDamage(enemy); });
         });
         this.move();
     }
