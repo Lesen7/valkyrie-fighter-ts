@@ -6,8 +6,8 @@ export default class Pod extends Enemy {
     // Properties
     topX: number;
     currentX: number;
-    speedX: number;
-    accelXMod: number;
+    accelX: number;
+    accelXmod: number;
     currentSense: number;
 
     // Methods
@@ -15,10 +15,10 @@ export default class Pod extends Enemy {
         super(game, gameMaster, sprite);
         this.health = 2;
         this.speed = 50;
-        this.topX = 120;
+        this.topX = 80;
         this.currentX = 0;
-        this.speedX = 0;
-        this.accelXMod = 0.1;
+        this.accelX = 0;
+        this.accelXmod = 90;
         this.currentSense = Math.round(Math.random());
         this.score = 100;
         this.difficulty = 1;
@@ -27,33 +27,33 @@ export default class Pod extends Enemy {
     // Sine motion
     move() {
         this.sprite.body.velocity.y = this.speed;
+        this.sprite.body.velocity.x = this.accelX;
 
-        console.log(this.speedX);
-        if(this.currentX < this.topX && this.currentSense == 1) {
-            this.currentX ++;
-            this.sprite.body.velocity.x = this.speedX;
-            if(this.currentX <= this.topX * 0.5) {
-                this.speedX ++;
-            } else {
-                console.log("substracting");
-                this.speedX --;
-            }
-            this.sprite.body.velocity.x = this.speedX;
-            if(this.speedX <= 0 && this.currentX >= this.topX) {
-                this.currentSense = 0;
-            }
-        } else {
-            this.currentX --;
-            this.sprite.body.velocity.x = -this.speedX;
-            if(this.currentX >= -this.topX * 0.5) {
-                this.speedX ++;
-            } else {
-                console.log("substracting");
-                this.speedX --;
-            }
-            if(this.speedX <= 0 && this.currentX <= -this.topX) {
-                this.currentSense = 1;
-            }
+        switch (this.currentSense) {
+            case 1:
+                if(this.currentX <= this.topX) {
+                    this.currentX ++;
+                    if(this.accelX <= this.speed) {
+                        this.accelX ++;
+                    } else {
+                        this.accelX = this.speed;
+                    }
+                } else {
+                    this.currentSense = 0;
+                }
+                break;
+            case 0:
+                if(this.currentX >= -this.topX) {
+                    this.currentX --;
+                    if(this.accelX >= -this.speed) {
+                        this.accelX --;
+                    } else {
+                        this.accelX = -this.speed;
+                    }
+                } else {
+                    this.currentSense = 1;
+                }
+                break;
         }
     }
 }

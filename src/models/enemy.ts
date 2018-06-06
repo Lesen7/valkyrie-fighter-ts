@@ -2,6 +2,7 @@ import Actor from './actor';
 import { Sprite, Game } from 'phaser-ce';
 import GameMaster from './gameMaster';
 import gameMaster from '../index';
+import Effect from './effect';
 
 export default abstract class Enemy extends Actor {
     // Properties
@@ -13,6 +14,7 @@ export default abstract class Enemy extends Actor {
     // Methods
     constructor(game: Game, gameMaster: GameMaster, sprite: Sprite, health?: number, speed?: number, score?: number) {
         super(game, sprite, health, speed);
+        this.gameMaster = gameMaster;
         this.score = score;
         this.destroyed = false;
         game.physics.arcade.enable(this.sprite);
@@ -34,6 +36,7 @@ export default abstract class Enemy extends Actor {
         this.sprite.kill();
         gameMaster.score += this.score;
         this.destroyed = true;
+        this.gameMaster.effects.push(new Effect(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, 'explosion_sm')));
     }
 
     update() {
