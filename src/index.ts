@@ -126,11 +126,7 @@ window.onload = () => {
         gameMaster.addGamePhases(gamePhases);
         gameMaster.addSpawnPoints(spawnPoints);
         gameMaster.initialize();
-
-        gameMaster.enemies = [(new Pod(game, gameMaster, game.add.sprite(game.world.width / 2, 10, 'pod_move')))];
-        gameMaster.effects = [(new Effect(game, game.add.sprite(2000, 2000, 'explosion_sm')))];
     }
-
     function update() {
         // Game object updates
         gameMaster.update();
