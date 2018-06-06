@@ -9,9 +9,18 @@ export default abstract class Actor {
     sprite: Sprite;
     health: number;
     speed: number;
+    /**
+     * Returns true if the object has been destroyed, false otherwise.
+     */
     destroyed: boolean;
 
-    // Methods
+    /**
+    * A simple game object that will interact with the Game Master and other objects.
+    * @param game The Phaser game the sprite will be added to.
+    * @param sprite The sprite for the object.
+    * @param health Defines how much health the object will have.
+    * @param speed Defines how fast the object will move.
+    */
     constructor(game: Game, sprite?: Sprite, health?: number, speed?: number) {
         this.game = game;
         this.sprite = sprite;

@@ -6,10 +6,13 @@ import gameMaster from '../index';
 
 export default class Bullet extends Actor {
     // Properties
+    /**
+     * Defines how much damage the bullet will deal on impact.
+     */
     damage: number;
 
     /**
-    * Creates a bullet object.
+    * A projectile object meant to hit and damage other game object.
     * @param game The Phaser game the sprite will be added to.
     * @param sprite The sprite for the bullet.
     * @param health Essentially defines how many enemies the bullet can hit before being destroyed.
