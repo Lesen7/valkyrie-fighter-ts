@@ -9,7 +9,6 @@ export default abstract class Enemy extends Actor {
     tintTimer: number;
     score: number;
     difficulty: number;
-    destroyed: boolean;
 
     // Methods
     constructor(game: Game, gameMaster: GameMaster, sprite: Sprite, health?: number, speed?: number, score?: number) {

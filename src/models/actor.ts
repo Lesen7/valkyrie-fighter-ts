@@ -10,6 +10,7 @@ export default abstract class Actor {
     sprite: Sprite;
     health: number;
     speed: number;
+    destroyed: boolean;
 
     // Methods
     constructor(game: Game, sprite?: Sprite, health?: number, speed?: number) {
@@ -32,6 +33,7 @@ export default abstract class Actor {
 
     destroy() {
         this.sprite.kill();
+        this.destroyed = true;
     }
 
     update () {

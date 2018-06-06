@@ -44,19 +44,43 @@ export default class GameMaster {
         }
     }
 
+    cleanUp() {
+        this.enemies.forEach((enemy, index) => {
+            if(enemy.destroyed == true) {
+                enemy = null;
+            }
+        });
+        this.effects.forEach((effect, index) => {
+            if(effect.destroyed == true) {
+                effect = null;
+            }
+        });
+        this.spawnPoints.forEach((spawnPoint, index) => {
+            if(spawnPoint.destroyed == true) {
+                spawnPoint = null;
+            }
+        });
+        this.player.bullets.forEach((playerBullet, index) => {
+            if(playerBullet.destroyed == true) {
+                playerBullet = null;
+            }
+        });
+    }
+
     update() {
         // Update the game according to game pahses
-        if (this.currentPhase.maxDifficulty == 1) {
+        if (this.currentPhase.maxDifficulty > 0) {
             this.player.update;
             this.enemies.forEach((enemy, index) => {
                 enemy.update();
             });
+            this.effects.forEach((effect, index) => {
+                effect.update();
+            });
+            this.spawnPoints.forEach((spawnPoint, index) => {
+                spawnPoint.update();
+            });
+            this.cleanUp();
         }
-        this.spawnPoints.forEach((spawnPoint, index) => {
-            spawnPoint.update();
-        });
-        this.effects.forEach((effect, index) => {
-            effect.update();
-        });
     }
 }
