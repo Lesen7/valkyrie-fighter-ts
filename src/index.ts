@@ -10,6 +10,7 @@ import Bullet from './models/bullet';
 import GameMaster from './models/gameMaster';
 import GamePhase from './models/gamePhase';
 import SpawnPoint from './models/spawnPoint';
+import Effect from './models/effect';
 
 let gameMaster = new GameMaster();
 export default gameMaster;
@@ -44,6 +45,7 @@ window.onload = () => {
 
         // Enemy sprites/images
         game.load.spritesheet('pod_move', 'assets/sprites/reguld/reguld_move.png', 33, 37);
+        game.load.spritesheet('explosion_sm', 'assets/sprites/explosion_sm/explosion_sm.png', 33, 37);
     }
 
     // Global input variables
@@ -116,16 +118,17 @@ window.onload = () => {
             new GamePhase('combat SS', 6),
         ];
         spawnPoints = [
-            new SpawnPoint(game, game.add.sprite(game.width / 2, 5), 0.1)
-            //new SpawnPoint(game, game.add.sprite(100, 5), 1),
-            //new SpawnPoint(game, game.add.sprite(game.width - 120, 5), 1)
+            new SpawnPoint(game, gameMaster, game.add.sprite(game.width / 2, 5), 1.1),
+            new SpawnPoint(game, gameMaster, game.add.sprite(100, 5), 1),
+            new SpawnPoint(game, gameMaster, game.add.sprite(game.width - 120, 5), 1.2)
         ];
         gameMaster.addPlayer(player);
         gameMaster.addGamePhases(gamePhases);
         gameMaster.addSpawnPoints(spawnPoints);
         gameMaster.initialize();
 
-        gameMaster.enemies = [(new Pod(game, gameMaster, enemySprite = game.add.sprite(game.world.width / 2, 10, 'pod_move')))];
+        gameMaster.enemies = [(new Pod(game, gameMaster, game.add.sprite(game.world.width / 2, 10, 'pod_move')))];
+        gameMaster.effects = [(new Effect(game, game.add.sprite(2000, 2000, 'explosion_sm')))];
     }
 
     function update() {
