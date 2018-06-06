@@ -43,6 +43,8 @@ export default class GameMaster {
      */
     constructor() {
         this.score = 0;
+        this.enemies = [];
+        this.effects = [];
     }
 
     /**
