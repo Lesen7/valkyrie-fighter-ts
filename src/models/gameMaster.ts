@@ -4,6 +4,7 @@ import SpawnPoint from './spawnPoint';
 import GamePhase from './gamePhase';
 import ControlLayout from './input';
 import { spawn } from 'child_process';
+import Effect from './effect';
 
 export default class GameMaster {
     // Properties
@@ -12,6 +13,7 @@ export default class GameMaster {
     currentPhase: GamePhase;
     spawnPoints: SpawnPoint[];
     enemies: Enemy[];
+    effects: Effect[];
     score: number;
 
     // Methods
@@ -52,6 +54,9 @@ export default class GameMaster {
         }
         this.spawnPoints.forEach((spawnPoint, index) => {
             spawnPoint.update();
+        });
+        this.effects.forEach((effect, index) => {
+            effect.update();
         });
     }
 }

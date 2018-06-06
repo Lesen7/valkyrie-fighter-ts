@@ -4,6 +4,7 @@ import Enemy from './enemy';
 import Pod from "./pod";
 import Actor from './actor';
 import gameMaster from '../index';
+import GameMaster from "./gameMaster";
 
 export default class SpawnPoint extends Actor {
     // Properties
@@ -11,10 +12,12 @@ export default class SpawnPoint extends Actor {
     frequency: number;
     top: number;
     counter: number;
+    gameMaster: GameMaster;
 
     // Methods
-    constructor(game: Game, sprite: Sprite, frequency: number) {
+    constructor(game: Game, gameMaster, sprite: Sprite, frequency: number) {
         super(game, sprite);
+        this.gameMaster = gameMaster;
         this.sprite = sprite;
         this.frequency = frequency;
         this.top = 100;
