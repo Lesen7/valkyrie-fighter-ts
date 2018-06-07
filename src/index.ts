@@ -36,7 +36,7 @@ window.onload = () => {
 
     function preload() {
         // Fonts
-        game.load.bitmapFont('fipps', 'assets/fonts/fipps.png', 'assets/fonts/fipps.fnt');
+        game.load.bitmapFont('smb3', 'assets/fonts/smb3.png', 'assets/fonts/smb3.fnt');
 
         // Background images
         game.load.image('stars_bg_0', 'assets/backgrounds/stars_bg_0.png');
@@ -81,8 +81,8 @@ window.onload = () => {
         background0 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_0');
         background1 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_1');
 
-        scoreMessage = "SCORE\n".split('').join('\n');
-        scoreText = game.add.bitmapText(game.width - 20, game.height / 2, 'fipps', scoreMessage, 14);
+        scoreMessage = "score\n".split('').join('\n');
+        scoreText = game.add.bitmapText(game.width - 20, game.height / 2, 'smb3', scoreMessage, 22);
         scoreText.anchor.setTo(0.5, 0.5);
 
         // Input configuration
@@ -102,16 +102,16 @@ window.onload = () => {
 
         // Creating the gameMaster object
         gamePhases = [
-            new GamePhase('pause menu', -3),
-            new GamePhase('advance', -2),
-            new GamePhase('main menu', -1),
-            new GamePhase('scramble', 0),
-            new GamePhase('combat D', 1),
-            new GamePhase('combat C', 2),
-            new GamePhase('combat B', 3),
-            new GamePhase('combat A', 4),
-            new GamePhase('combat S', 5),
-            new GamePhase('combat SS', 6),
+            new GamePhase('pause menu', -3, -3),
+            new GamePhase('advance', -2, -2),
+            new GamePhase('main menu', -1, -1),
+            new GamePhase('scramble', 0, 0),
+            new GamePhase('combat D', 1, 5000),
+            new GamePhase('combat C', 2, 10000),
+            new GamePhase('combat B', 3, 15000),
+            new GamePhase('combat A', 4, 20000),
+            new GamePhase('combat S', 5, 25000),
+            new GamePhase('combat SS', 6, 30000)
         ];
         spawnPoints = [
             new SpawnPoint(game, gameMaster, game.add.sprite(game.width / 2, 5), 1.1),

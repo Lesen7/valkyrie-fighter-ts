@@ -5,7 +5,6 @@ import GamePhase from './gamePhase';
 import ControlLayout from './input';
 import { spawn } from 'child_process';
 import Effect from './effect';
-import { printAtInterval } from '../utils/printUtils';
 
 export default class GameMaster {
     /**
@@ -89,7 +88,7 @@ export default class GameMaster {
     }
 
     /**
-     * Sets an game object to null and removes it from its corresponding object pool.
+     * Sets a game object to null and removes it from its corresponding object pool.
      * @param list The array that the object belongs to.
      * @param object The object to be set to null and removed from the array.
      */
@@ -100,9 +99,10 @@ export default class GameMaster {
         }
     }
 
+    
     /**
      * Updates the game objects according to game phases.
-     * Iterates through object pools to update them and, if necessary, delete them for optimization.
+     * Iterates through object pools to update them and, if necessary, deletes them for optimization.
      */
     update() {
         if (this.currentPhase.maxDifficulty > 0) {
@@ -120,6 +120,6 @@ export default class GameMaster {
                 this.cleanUp(spawnPoint, this.spawnPoints);
             });
         }
-        printAtInterval(20, 'Enemies: ' + this.enemies);
+
     }
 }
