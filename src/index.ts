@@ -11,6 +11,8 @@ import GameMaster from './models/gameMaster';
 import GamePhase from './models/gamePhase';
 import SpawnPoint from './models/spawnPoint';
 import Effect from './models/effect';
+import { Sprite } from 'phaser-ce';
+import { start } from 'repl';
 
 let gameMaster = new GameMaster();
 export default gameMaster;
@@ -53,6 +55,7 @@ window.onload = () => {
         // UI sprites/images
         game.load.image('player_plate', 'assets/sprites/ui/playerPlate.png');
         game.load.image('score_plate', 'assets/sprites/ui/scorePlate.png');
+        game.load.image('health_bar', 'assets/sprites/ui/healthBar.png');
     }
 
     // Global input variables
@@ -84,6 +87,7 @@ window.onload = () => {
     // UI images/sprites
     let playerPlate: Phaser.Sprite;
     let scorePlate: Phaser.Sprite;
+    let healthBars: Phaser.Sprite[];
 
     function create() {
         // Game variable initializations
@@ -93,8 +97,7 @@ window.onload = () => {
         background0 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_0');
         background1 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_1');
 
-
-        // UI images initializations
+        // UI images/sprites initializations
         playerPlate = game.add.sprite(0, game.height / 2, 'player_plate');
         playerPlate.anchor.setTo(0, 0.5);
         game.physics.arcade.enableBody(playerPlate);
@@ -103,6 +106,8 @@ window.onload = () => {
         scorePlate.anchor.setTo(1, 0.5);
         game.physics.arcade.enableBody(scorePlate);
         scorePlate.body.immovable = true;
+
+        healthBars = [];
 
         // UI text initializations
         scoreMessage = "score\n".split('').join('\n');
@@ -125,7 +130,9 @@ window.onload = () => {
 
         // Player initializations
         playerSprite = game.add.sprite(game.world.width / 2, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(game, keys, playerSprite, 100, 250, 6, 12, -7);
+        player = new Player(game, keys, playerSprite, 10, 250, 6, 12, -7);
+
+        addHealthBars(game.world.height / 2 - 20, 15, 12);
 
         // Creating the gameMaster object
         gamePhases = [
@@ -174,5 +181,18 @@ window.onload = () => {
     function leftPad(text: string, pad: number, char='0'): string {
         pad = pad - text.length + 1;
         return pad > 0 ? new Array(pad).join(char) + text : text;
+    }
+
+    function addHealthBars(startPoint: number, xOffset: number, ySpacing: number) {
+        for (let c = 0; c < 10; c++) {
+            let sprite: Sprite;
+            if(c = 0) {
+                sprite = game.add.sprite(playerPlate.x + xOffset, startPoint, 'health_bar');
+                sprite.anchor.set(0, 0.5);
+            } else {
+                sprite = game.add.sprite(playerPlate.x + xOffset, startPoint + ySpacing * c, 'health_bar');
+                sprite.anchor.set(0, 0.5);
+            }
+        }
     }
 };

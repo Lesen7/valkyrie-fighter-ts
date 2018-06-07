@@ -148,11 +148,9 @@ export default class GameMaster {
         }
         if(this.player.keys.pause.justDown) {
             if(this.isPaused == true) {
-                console.log('unpaused');
                 this.isPaused = false;
             } else {
                 this.isPaused = true;
-                console.log('paused');
             }
         }
         if(this.score >= this.currentPhase.maxScore) {
