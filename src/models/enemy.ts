@@ -94,5 +94,6 @@ export default abstract class Enemy extends Actor {
             }
             this.move();
         }
+        this.game.physics.arcade.collide(this.sprite, this.gameMaster.player.sprite, () => {this.gameMaster.player.takeDamage(1);});
     }
 }

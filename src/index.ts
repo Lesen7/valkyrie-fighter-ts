@@ -132,7 +132,7 @@ window.onload = () => {
         playerSprite = game.add.sprite(game.world.width / 2, game.world.height - 150, 'vf1_sp_sh');
         player = new Player(game, keys, playerSprite, 10, 250, 6, 12, -7);
 
-        addHealthBars(game.world.height / 2 - 20, 15, 12);
+        addHealthBars(269, 9, 11);
 
         // Creating and initializing the GameMaster object
         gamePhases = [
@@ -155,13 +155,11 @@ window.onload = () => {
         gameMaster.addGamePhases(gamePhases);
         gameMaster.addSpawnPoints(spawnPoints);
         gameMaster.initialize();
-<<<<<<< HEAD
+        gameMaster.player.healthBars = healthBars;
 
         // Initializing GameMaster arrays
         gameMaster.enemies = [(new Pod(game, gameMaster, game.add.sprite(game.world.width / 2, 10, 'pod_move')))];
         gameMaster.effects = [(new Effect(game, game.add.sprite(2000, 2000, 'explosion_sm')))];
-=======
->>>>>>> fec454e5702ff6ffca55c2024118a0d708ce7654
     }
     function update() {
         // Game object updates
@@ -191,14 +189,17 @@ window.onload = () => {
     }
 
     function addHealthBars(startPoint: number, xOffset: number, ySpacing: number) {
-        for (let c = 0; c < 10; c++) {
+        let c;
+        for (c = 0; c < 10; c++) {
             let sprite: Sprite;
-            if(c = 0) {
+            if(c == 0) {
                 sprite = game.add.sprite(playerPlate.x + xOffset, startPoint, 'health_bar');
                 sprite.anchor.set(0, 0.5);
+                healthBars.push(sprite);
             } else {
                 sprite = game.add.sprite(playerPlate.x + xOffset, startPoint + ySpacing * c, 'health_bar');
                 sprite.anchor.set(0, 0.5);
+                healthBars.push(sprite);
             }
         }
     }
