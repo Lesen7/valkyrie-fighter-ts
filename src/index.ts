@@ -49,6 +49,10 @@ window.onload = () => {
         // Enemy sprites/images
         game.load.spritesheet('pod_move', 'assets/sprites/reguld/reguld_move.png', 33, 37);
         game.load.spritesheet('explosion_sm', 'assets/sprites/explosion_sm/explosion_sm.png', 33, 37);
+
+        // UI sprites/images
+        game.load.image('player_plate', 'assets/sprites/ui/playerPlate.png');
+        game.load.image('score_plate', 'assets/sprites/ui/scorePlate.png');
     }
 
     // Global input variables
@@ -77,6 +81,10 @@ window.onload = () => {
     let background0: Phaser.TileSprite;
     let background1: Phaser.TileSprite;
 
+    // UI images/sprites
+    let playerPlate: Phaser.Sprite;
+    let scorePlate: Phaser.Sprite;
+
     function create() {
         // Game variable initializations
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -85,10 +93,22 @@ window.onload = () => {
         background0 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_0');
         background1 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_1');
 
+
+        // UI images initializations
+        playerPlate = game.add.sprite(0, game.height / 2, 'player_plate');
+        playerPlate.anchor.setTo(0, 0.5);
+        game.physics.arcade.enableBody(playerPlate);
+        playerPlate.body.immovable = true;
+        scorePlate = game.add.sprite(game.width, game.height / 2, 'score_plate');
+        scorePlate.anchor.setTo(1, 0.5);
+        game.physics.arcade.enableBody(scorePlate);
+        scorePlate.body.immovable = true;
+
+        // UI text initializations
         scoreMessage = "score\n".split('').join('\n');
-        scoreText = game.add.bitmapText(game.width - 20, game.height / 2, 'smb3', scoreMessage, 22);
+        scoreText = game.add.bitmapText(game.width - 25, game.height / 2, 'smb3', scoreMessage, 20);
         scoreText.anchor.setTo(0.5, 0.5);
-        pauseText = game.add.bitmapText(game.width / 2, game.height / 2, 'smb3', '', 22);
+        pauseText = game.add.bitmapText(game.width / 2, game.height / 2, 'smb3', '', 20);
         pauseMessage = "game paused";
 
         // Input configuration
@@ -104,7 +124,7 @@ window.onload = () => {
         keys = new ControlLayout(keysConfig);
 
         // Player initializations
-        playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
+        playerSprite = game.add.sprite(game.world.width / 2, game.world.height - 150, 'vf1_sp_sh');
         player = new Player(game, keys, playerSprite, 100, 250, 6, 12, -7);
 
         // Creating the gameMaster object
@@ -122,7 +142,7 @@ window.onload = () => {
         spawnPoints = [
             new SpawnPoint(game, gameMaster, game.add.sprite(game.width / 2, 5), 1.1),
             new SpawnPoint(game, gameMaster, game.add.sprite(120, 5), 1),
-            new SpawnPoint(game, gameMaster, game.add.sprite(game.width - 140, 5), 1.2)
+            new SpawnPoint(game, gameMaster, game.add.sprite(game.width - 152, 5), 1.2)
         ];
         gameMaster.addPlayer(player);
         gameMaster.addGamePhases(gamePhases);
@@ -133,6 +153,10 @@ window.onload = () => {
         // Game object updates
         gameMaster.update();
         scoreText.text = scoreMessage + leftPad(gameMaster.score.toString(), 8, "0").split('').join('\n');
+
+        // Special collisions
+        game.physics.arcade.collide(gameMaster.player.sprite, playerPlate);
+        game.physics.arcade.collide(gameMaster.player.sprite, scorePlate);
         
         // Scroll backgrounds
         if(gameMaster.isPaused == false) {

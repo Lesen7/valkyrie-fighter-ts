@@ -55,7 +55,7 @@ export default class Player extends Actor {
         game.physics.arcade.enable(this.sprite);
         this.sprite.body.allowGravity = false;
         this.sprite.body.collideWorldBounds = true;
-        this.sprite.body.immovable = true;
+        this.sprite.body.immovable = false;
         
         // Player animations
         this.sprite.animations.add('turn_l', [0, 1], 10, true);
