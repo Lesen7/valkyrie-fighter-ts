@@ -36,7 +36,7 @@ window.onload = () => {
 
     function preload() {
         // Fonts
-        game.load.bitmapFont('fipps', 'assets/fonts/fipps.png', 'assets/fonts/fipps.xml');
+        game.load.bitmapFont('fipps', 'assets/fonts/fipps.png', 'assets/fonts/fipps.fnt');
 
         // Background images
         game.load.image('stars_bg_0', 'assets/backgrounds/stars_bg_0.png');
@@ -81,8 +81,8 @@ window.onload = () => {
         background0 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_0');
         background1 = game.add.tileSprite(game.world.width / 2 - 300, 0, 600, 800, 'stars_bg_1');
 
-        scoreMessage = "Score\n".split('').join('\n');
-        scoreText = game.add.bitmapText(game.width - 20, game.height / 2, 'fipps', scoreMessage, 25);
+        scoreMessage = "SCORE\n".split('').join('\n');
+        scoreText = game.add.bitmapText(game.width - 20, game.height / 2, 'fipps', scoreMessage, 14);
         scoreText.anchor.setTo(0.5, 0.5);
 
         // Input configuration
@@ -115,8 +115,8 @@ window.onload = () => {
         ];
         spawnPoints = [
             new SpawnPoint(game, gameMaster, game.add.sprite(game.width / 2, 5), 1.1),
-            new SpawnPoint(game, gameMaster, game.add.sprite(100, 5), 1),
-            new SpawnPoint(game, gameMaster, game.add.sprite(game.width - 120, 5), 1.2)
+            new SpawnPoint(game, gameMaster, game.add.sprite(120, 5), 1),
+            new SpawnPoint(game, gameMaster, game.add.sprite(game.width - 140, 5), 1.2)
         ];
         gameMaster.addPlayer(player);
         gameMaster.addGamePhases(gamePhases);
