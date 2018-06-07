@@ -67,6 +67,9 @@ export default abstract class Actor {
             this.destroy();
         }
     }
+    /**
+     * Stops the game object. Useful for pausing the game or freezing an object.
+     */
     stop() {
         if(this.sprite.body != null) {
             this.sprite.body.velocity.x = 0;

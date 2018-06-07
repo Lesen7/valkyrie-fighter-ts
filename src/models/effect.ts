@@ -22,6 +22,9 @@ export default class Effect extends Actor {
             this.destroy();
         }
     }
+    /**
+     * When an effect is stopped, its animations will also stop.
+     */
     stop() {
         super.stop();
         this.sprite.animations.stop();
