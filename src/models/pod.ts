@@ -13,7 +13,7 @@ export default class Pod extends Enemy {
     // Methods
     constructor(game: Game, gameMaster: GameMaster, sprite: Sprite) {
         super(game, gameMaster, sprite);
-        this.health = 2;
+        this.health = 2;  
         this.speed = 50;
         this.topX = 80;
         this.currentX = 0;

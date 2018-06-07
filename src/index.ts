@@ -104,7 +104,7 @@ window.onload = () => {
         playerSprite = game.add.sprite(32, game.world.height - 150, 'vf1_sp_sh');
         player = new Player(game, keys, playerSprite, 100, 250, 6, 12, -7);
 
-        // Creating the gameMaster object
+        // Creating and initializing the GameMaster object
         gamePhases = [
             new GamePhase('pause menu', -3),
             new GamePhase('advance', -2),
@@ -127,6 +127,7 @@ window.onload = () => {
         gameMaster.addSpawnPoints(spawnPoints);
         gameMaster.initialize();
 
+        // Initializing GameMaster arrays
         gameMaster.enemies = [(new Pod(game, gameMaster, game.add.sprite(game.world.width / 2, 10, 'pod_move')))];
         gameMaster.effects = [(new Effect(game, game.add.sprite(2000, 2000, 'explosion_sm')))];
     }
