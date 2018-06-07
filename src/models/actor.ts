@@ -62,9 +62,15 @@ export default abstract class Actor {
     /**
     * Updates the properties of the game object and essentially executes its lifetime.
     */
-    update () {
+    update() {
         if (this.health <= 0) {
             this.destroy();
+        }
+    }
+    stop() {
+        if(this.sprite.body != null) {
+            this.sprite.body.velocity.x = 0;
+            this.sprite.body.velocity.y = 0;
         }
     }
 }

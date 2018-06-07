@@ -22,4 +22,8 @@ export default class Effect extends Actor {
             this.destroy();
         }
     }
+    stop() {
+        super.stop();
+        this.sprite.animations.stop();
+    }
 }

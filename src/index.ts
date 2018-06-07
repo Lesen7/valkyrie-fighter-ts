@@ -62,12 +62,16 @@ window.onload = () => {
     let enemy: Enemy;
     let enemySprite: Phaser.Sprite;
 
-    // TODO: Global custom actor groups
+    // Global custom actor groups
     let gamePhases: GamePhase[];
     let spawnPoints: SpawnPoint[];
+
+    // Text variables
     let scoreText: Phaser.BitmapText;
     let scoreMessage: string;
     let style;
+    let pauseText: Phaser.BitmapText;
+    let pauseMessage: string;
 
     // Background images
     let background0: Phaser.TileSprite;
@@ -84,6 +88,8 @@ window.onload = () => {
         scoreMessage = "score\n".split('').join('\n');
         scoreText = game.add.bitmapText(game.width - 20, game.height / 2, 'smb3', scoreMessage, 22);
         scoreText.anchor.setTo(0.5, 0.5);
+        pauseText = game.add.bitmapText(game.width / 2, game.height / 2, 'smb3', '', 22);
+        pauseMessage = "game paused";
 
         // Input configuration
         const keysConfig = {
@@ -92,7 +98,8 @@ window.onload = () => {
             up: game.input.keyboard.addKey(Phaser.KeyCode.W),
             left: game.input.keyboard.addKey(Phaser.KeyCode.A),
             down: game.input.keyboard.addKey(Phaser.KeyCode.S),
-            right: game.input.keyboard.addKey(Phaser.KeyCode.D)
+            right: game.input.keyboard.addKey(Phaser.KeyCode.D),
+            pause: game.input.keyboard.addKey(Phaser.KeyCode.P)
         };
         keys = new ControlLayout(keysConfig);
 
@@ -102,7 +109,6 @@ window.onload = () => {
 
         // Creating the gameMaster object
         gamePhases = [
-            new GamePhase('pause menu', -3, -3),
             new GamePhase('advance', -2, -2),
             new GamePhase('main menu', -1, -1),
             new GamePhase('scramble', 0, 0),
@@ -126,12 +132,19 @@ window.onload = () => {
     function update() {
         // Game object updates
         gameMaster.update();
-        player.update();
         scoreText.text = scoreMessage + leftPad(gameMaster.score.toString(), 8, "0").split('').join('\n');
         
         // Scroll backgrounds
-        background0.tilePosition.y += 0.4;
-        background1.tilePosition.y += 0.5;
+        if(gameMaster.isPaused == false) {
+            if(pauseText != undefined) {
+                pauseText.text = ' ';
+            }
+            background0.tilePosition.y += 0.4;
+            background1.tilePosition.y += 0.5;
+        } else {
+            pauseText.text = pauseMessage;
+            pauseText.anchor.setTo(0.5, 0.5);
+        }
     }
 
     function leftPad(text: string, pad: number, char='0'): string {

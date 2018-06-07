@@ -100,6 +100,7 @@ export default class Player extends Actor {
         // Cancel acceleration. If anyone knows how to disable acceleration in Phaser CE, please let me know. I feel unclean doing this
         this.sprite.body.velocity.x = 0;
         this.sprite.body.velocity.y = 0;
+
         // Player input
         if (this.keys.left.isDown) {
             this.move(-this.speed, 0);

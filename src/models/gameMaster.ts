@@ -35,6 +35,14 @@ export default class GameMaster {
      * The current game's score.
      */
     score: number;
+    /**
+     * Tells whether the game is paused or not.
+     */
+    isPaused: boolean;
+    /**
+     * The last phase the game was in.
+     */
+    previousPhase: GamePhase;
 
     /**
      * A Singleton that will control most of the game's flow and behaviors, and store important game properties and objects.
@@ -44,6 +52,7 @@ export default class GameMaster {
         this.score = 0;
         this.enemies = [];
         this.effects = [];
+        this.isPaused = false;
     }
 
     /**
@@ -73,6 +82,7 @@ export default class GameMaster {
      */
     initialize() {
         this.currentPhase = this.getPhase("combat D");
+        this.isPaused = false;
     }
 
     /**
@@ -98,15 +108,17 @@ export default class GameMaster {
             list.splice(object, 1);
         }
     }
+    displayPauseMenu() {
 
+    }
     
     /**
      * Updates the game objects according to game phases.
      * Iterates through object pools to update them and, if necessary, deletes them for optimization.
      */
     update() {
-        if (this.currentPhase.maxDifficulty > 0) {
-            this.player.update;
+        if(this.currentPhase.maxDifficulty > 0 && this.isPaused == false) {
+            this.player.update();
             this.enemies.forEach((enemy, index) => {
                 enemy.update();
                 this.cleanUp(enemy, this.enemies);
@@ -119,7 +131,32 @@ export default class GameMaster {
                 spawnPoint.update();
                 this.cleanUp(spawnPoint, this.spawnPoints);
             });
+        } else if(this.isPaused) {
+            this.player.stop();
+            this.player.bullets.forEach((bullet, index) => {
+                bullet.stop();
+            });
+            this.enemies.forEach((enemy, index) => {
+                enemy.stop();
+            });
+            this.effects.forEach((effect, index) => {
+                effect.stop();
+            });
+            this.spawnPoints.forEach((spawnPoint, index) => {
+                spawnPoint.stop();
+            });
         }
-
+        if(this.player.keys.pause.justDown) {
+            if(this.isPaused == true) {
+                console.log('unpaused');
+                this.isPaused = false;
+            } else {
+                this.isPaused = true;
+                console.log('paused');
+            }
+        }
+        if(this.score >= this.currentPhase.maxScore) {
+            this.currentPhase = this.getPhase(this.currentPhase.maxDifficulty + 1);
+        }
     }
 }

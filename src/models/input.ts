@@ -1,4 +1,5 @@
 import { Key } from "phaser-ce";
+import * as Phaser from 'phaser-ce';
 
 export default class ControlLayout {
     /**
@@ -25,6 +26,10 @@ export default class ControlLayout {
      * The key used to move to the right.
      */
     right: Phaser.Key;
+    /**
+     * The key used to pause the game.
+     */
+    pause: Phaser.Key;
 
     /**
      * An object that contains data about player input.
@@ -37,5 +42,6 @@ export default class ControlLayout {
         this.left = configObject.left;
         this.down = configObject.down;
         this.right = configObject.right;
+        this.pause = configObject.pause;
     }
 }
