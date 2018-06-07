@@ -4,10 +4,10 @@
 
 **Jugar:** https://lesen7.github.io/valkyrie-fighter-ts/
 
-
 ## **CONTROLES** ##
 * Movimiento: WASD
 * Disparo: Espacio
+* Pausa: P
 
 <br/>
 <br/>
