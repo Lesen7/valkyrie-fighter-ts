@@ -130,7 +130,7 @@ window.onload = () => {
 
         // Player initializations
         playerSprite = game.add.sprite(game.world.width / 2, game.world.height - 150, 'vf1_sp_sh');
-        player = new Player(game, keys, playerSprite, 10, 250, 6, 10, -14);
+        player = new Player(game, keys, playerSprite, 10, 250, 5, 10, -14);
 
         addHealthBars(269, 9, 11);
 

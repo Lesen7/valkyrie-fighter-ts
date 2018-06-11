@@ -31,7 +31,32 @@ export default class Player extends Actor {
      * A pool of all existing player bullets.
      */
     bullets: Bullet[];
+    /**
+     * The player health bars.
+     */
     healthBars: Sprite[];
+    /**
+     * Defines how long the player will be invincible after getting hit.
+     */
+    blinkTime: number;
+    /**
+     * Counts down the blink time.
+     */
+    private blinkTimer: number;
+    /**
+     * Defines how often the player will blink while invincible.
+     */
+    blinkRate: number;
+    /**
+     * Whether the player is currently invincible or not.
+     */
+    invincible: boolean;
+    /**
+     * 
+     */
+    private opaqueTime: number;
+    private transparentTime: number;
+    opaque: boolean;
 
     /**
      * A player object that can be controlled through user input.
@@ -46,15 +71,25 @@ export default class Player extends Actor {
      * @param shootOffsetX The vertical offset at which the bullets will be created.
      * @param shootOffsetY The variable that counts down the firing rate.
      */
-    constructor(game: Game, controls: ControlLayout, sprite: Sprite, health: number, speed: number, fireRate: number, shootOffsetX?: number, shootOffsetY?: number) {
+    constructor(game: Game, controls: ControlLayout, sprite: Sprite, health: number, speed: number, fireRate: number, shootOffsetX?: number, shootOffsetY?: number, blinkTime?: number, blinkRate?: number) {
         super(game, sprite, health, speed);
         this.healthBars = [];
         this.destroyed = false;
+
         this.keys = controls;
         this.fireRate = fireRate;
         this.shootOffsetX = shootOffsetX;
         this.shootOffsetY = shootOffsetY;
         this.bullets = [];
+
+        this.blinkTime = 180;
+        this.blinkTimer = this.blinkTime;
+        this.blinkRate = 7;
+        this.invincible = false;
+        this.opaque = false;
+        this.opaqueTime = this.blinkRate;
+        this.transparentTime = this.blinkRate;
+
         game.physics.arcade.enable(this.sprite);
         this.sprite.body.allowGravity = false;
         this.sprite.body.collideWorldBounds = true;
@@ -67,9 +102,37 @@ export default class Player extends Actor {
     }
 
     takeDamage(damage: number) {
-        this.health -= damage;
-        this.healthBars[0].kill();
-        this.healthBars.shift();
+        if(this.invincible == false) {
+            this.health -= damage;
+            this.healthBars[0].kill();
+            this.healthBars.shift();
+            this.invincible = true;
+            this.blinkTimer = this.blinkTime;
+        }
+    }
+
+    blink() {
+        if(this.blinkTimer >= 0) {
+            this.blinkTimer --;
+
+            if(this.opaqueTime > 0 && this.opaque == true) {
+                this.sprite.alpha = 1;
+                this.opaqueTime --;
+            } else if(this.opaque == true){
+                this.transparentTime = this.blinkRate;
+                this.opaque = false;
+            }
+            if(this.transparentTime > 0 && this.opaque == false) {
+                this.sprite.alpha = 0;
+                this.transparentTime --;
+            } else if(this.opaque == false){
+                this.opaqueTime = this.blinkRate;
+                this.opaque = true;
+            }
+        } else {
+            this.invincible = false;
+            this.sprite.alpha = 1;
+        }
     }
 
     /**
@@ -91,6 +154,10 @@ export default class Player extends Actor {
     update() {
         if(this.destroyed == false) {
             super.update();
+            
+            if(this.invincible == true) {
+                this.blink();
+            }
 
             // Count down the fire rate counter
             if (this.bulletTimer >= 0) {
