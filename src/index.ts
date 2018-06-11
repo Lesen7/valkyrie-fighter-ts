@@ -89,6 +89,15 @@ window.onload = () => {
     let scorePlate: Phaser.Sprite;
     let healthBars: Phaser.Sprite[];
 
+    interface menuOptions {
+        logoText: Phaser.BitmapText,
+        startText: Phaser.BitmapText,
+        optionsText: Phaser.BitmapText,
+        scoreboardText: Phaser.BitmapText
+    };
+    let mainMenu;
+    let menuSpacing: number;
+
     function create() {
         // Game variable initializations
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -115,6 +124,11 @@ window.onload = () => {
         scoreText.anchor.setTo(0.5, 0.5);
         pauseText = game.add.bitmapText(game.width / 2, game.height / 2, 'smb3', '', 20);
         pauseMessage = "game paused";
+
+        // Menu ui
+        mainMenu = {} as menuOptions;
+
+        menuSpacing = 20;
 
         // Input configuration
         const keysConfig = {
@@ -158,24 +172,35 @@ window.onload = () => {
         gameMaster.player.healthBars = healthBars;
     }
     function update() {
-        // Game object updates
-        gameMaster.update();
-        scoreText.text = scoreMessage + leftPad(gameMaster.score.toString(), 8, "0").split('').join('\n');
-
-        // Special collisions
-        game.physics.arcade.collide(gameMaster.player.sprite, playerPlate);
-        game.physics.arcade.collide(gameMaster.player.sprite, scorePlate);
-        
-        // Scroll backgrounds
-        if(gameMaster.isPaused == false) {
-            if(pauseText != undefined) {
-                pauseText.text = ' ';
+        if(gameMaster.currentPhase.maxDifficulty >= 0) {
+            // Game object updates
+            gameMaster.update();
+            scoreText.text = scoreMessage + leftPad(gameMaster.score.toString(), 8, "0").split('').join('\n');
+    
+            // Special collisions
+            game.physics.arcade.collide(gameMaster.player.sprite, playerPlate);
+            game.physics.arcade.collide(gameMaster.player.sprite, scorePlate);
+            
+            // Scroll backgrounds
+            if(gameMaster.isPaused == false) {
+                if(pauseText != undefined) {
+                    pauseText.text = ' ';
+                }
+                background0.tilePosition.y += 0.4;
+                background1.tilePosition.y += 0.5;
+            } else {
+                pauseText.text = pauseMessage;
+                pauseText.anchor.setTo(0.5, 0.5);
             }
-            background0.tilePosition.y += 0.4;
-            background1.tilePosition.y += 0.5;
-        } else {
-            pauseText.text = pauseMessage;
-            pauseText.anchor.setTo(0.5, 0.5);
+        } else if(gameMaster.currentPhase == gameMaster.getPhase('main menu')) {
+            mainMenu.logoText = game.add.bitmapText(game.width / 2, game.height / 2 - 300, 'smb3', 'valkyrie fighter', 28);
+            mainMenu.logoText.anchor.setTo(0.5, 0.5);
+            mainMenu.startText = game.add.bitmapText(game.width / 2, game.height / 2, 'smb3', 'start', 15);
+            mainMenu.startText.anchor.setTo(0.5, 0.5);
+            mainMenu.optionsText = game.add.bitmapText(game.width / 2, game.height / 2 - menuSpacing, 'smb3', 'options', 15);
+            mainMenu.optionsText.anchor.setTo(0.5, 0.5);
+            mainMenu.scoreboardText = game.add.bitmapText(game.width / 2, game.height / 2 - menuSpacing * 2, 'smb3', 'scoreboards', 15);
+            mainMenu.scoreboardText.anchor.setTo(0.5, 0.5);
         }
     }
 

@@ -82,6 +82,7 @@ export default class GameMaster {
      */
     initialize() {
         this.currentPhase = this.getPhase("combat D");
+        console.log(this.currentPhase);
         this.isPaused = false;
     }
 
