@@ -89,15 +89,6 @@ window.onload = () => {
     let scorePlate: Phaser.Sprite;
     let healthBars: Phaser.Sprite[];
 
-    interface menuOptions {
-        logoText: Phaser.BitmapText,
-        startText: Phaser.BitmapText,
-        optionsText: Phaser.BitmapText,
-        scoreboardText: Phaser.BitmapText
-    };
-    let mainMenu;
-    let menuSpacing: number;
-
     function create() {
         // Game variable initializations
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -125,11 +116,6 @@ window.onload = () => {
         pauseText = game.add.bitmapText(game.width / 2, game.height / 2, 'smb3', '', 20);
         pauseMessage = "game paused";
 
-        // Menu ui
-        mainMenu = {} as menuOptions;
-
-        menuSpacing = 20;
-
         // Input configuration
         const keysConfig = {
             fire: game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR),
@@ -150,8 +136,7 @@ window.onload = () => {
 
         // Creating and initializing the GameMaster object
         gamePhases = [
-            new GamePhase('advance', -2, -2),
-            new GamePhase('main menu', -1, -1),
+            new GamePhase('advance', -1, -1),
             new GamePhase('scramble', 0, 0),
             new GamePhase('combat D', 1, 5000),
             new GamePhase('combat C', 2, 10000),
@@ -192,15 +177,6 @@ window.onload = () => {
                 pauseText.text = pauseMessage;
                 pauseText.anchor.setTo(0.5, 0.5);
             }
-        } else if(gameMaster.currentPhase == gameMaster.getPhase('main menu')) {
-            mainMenu.logoText = game.add.bitmapText(game.width / 2, game.height / 2 - 300, 'smb3', 'valkyrie fighter', 28);
-            mainMenu.logoText.anchor.setTo(0.5, 0.5);
-            mainMenu.startText = game.add.bitmapText(game.width / 2, game.height / 2, 'smb3', 'start', 15);
-            mainMenu.startText.anchor.setTo(0.5, 0.5);
-            mainMenu.optionsText = game.add.bitmapText(game.width / 2, game.height / 2 - menuSpacing, 'smb3', 'options', 15);
-            mainMenu.optionsText.anchor.setTo(0.5, 0.5);
-            mainMenu.scoreboardText = game.add.bitmapText(game.width / 2, game.height / 2 - menuSpacing * 2, 'smb3', 'scoreboards', 15);
-            mainMenu.scoreboardText.anchor.setTo(0.5, 0.5);
         }
     }
 
