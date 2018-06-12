@@ -5,6 +5,7 @@ import Pod from "./pod";
 import Actor from './actor';
 import gameMaster from '../index';
 import GameMaster from "./gameMaster";
+import Fighter from "./fighter";
 
 export default class SpawnPoint extends Actor {
     sprite: Sprite;
@@ -47,17 +48,19 @@ export default class SpawnPoint extends Actor {
         if(result < 0.6) {
             this.counter = 0;
             return;
-        } else if(result >= 0.6) {
-            this.spawn();
+        } else if(result >= 0.6 && result < 0.8) {
+            this.spawn(new Pod(this.game, this.gameMaster, this.game.add.sprite(this.sprite.x, this.sprite.y, 'pod_move')));
+        } else if(result >= 0.8 && result <= 0.9) {
+            this.spawn(new Fighter(this.game, this.gameMaster, this.game.add.sprite(this.sprite.x, this.sprite.y, 'fighter_move')));
         }
     }
 
     /**
      * Spawns an enemy and resets the spawn counter.
      */
-    spawn() {
+    spawn(enemy: Enemy) {
         this.counter = 0;
-        gameMaster.enemies.push(new Pod(this.game, this.gameMaster, this.game.add.sprite(this.sprite.x, this.sprite.y, 'pod_move')));
+        gameMaster.enemies.push(enemy);
     }
 
     /**

@@ -4,7 +4,7 @@ import Actor from "./actor";
 import GameMaster from './gameMaster';
 import gameMaster from '../index';
 
-export default class Bullet extends Actor {
+export default abstract class Bullet extends Actor {
     // Properties
     /**
      * Defines how much damage the bullet will deal on impact.
@@ -36,10 +36,17 @@ export default class Bullet extends Actor {
     }
 
     /**
-    * Moves the bullet upwards across the game world.
-    */
-    move() {
-        this.sprite.body.velocity.y -= this.speed;
+     * Moves the bullet into a specific direction.
+     * @param x The X component of the movement vector.
+     * @param y The y component of the movement vector.
+     */
+    move(x?: number, y?: number) {
+        if(x == null || x == undefined || y == null || y == undefined) {
+            this.sprite.body.velocity.y -= this.speed;
+        } else {
+            this.sprite.body.velocity.x = x;
+            this.sprite.body.velocity.y = y;
+        }
     }
 
     /**
@@ -48,9 +55,6 @@ export default class Bullet extends Actor {
     */
     update () {
         super.update();
-        gameMaster.enemies.forEach((enemy, index) => {
-            this.game.physics.arcade.collide(this.sprite, enemy.sprite, () => { this.takeDamage(1), this.dealDamage(enemy); });
-        });
         this.move();
     }
 }

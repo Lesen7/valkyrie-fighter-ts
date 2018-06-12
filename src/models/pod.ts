@@ -28,7 +28,7 @@ export default class Pod extends Enemy {
      */
     constructor(game: Game, gameMaster: GameMaster, sprite: Sprite) {
         super(game, gameMaster, sprite);
-        this.health = 2;  
+        this.health = 3;  
         this.speed = 50;
         this.XAmplitude = 80;
         this.XCurrent = 0;

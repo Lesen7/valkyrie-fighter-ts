@@ -5,6 +5,7 @@ import ControlLayout from './input';
 import gamePhase from './gamePhase';
 import GameMaster from './gameMaster';
 import gameMaster from '../index';
+import PlayerBullet from './playerBullet';
 
 export default class Player extends Actor {
     /**
@@ -82,7 +83,7 @@ export default class Player extends Actor {
         this.shootOffsetY = shootOffsetY;
         this.bullets = [];
 
-        this.blinkTime = 180;
+        this.blinkTime = 120;
         this.blinkTimer = this.blinkTime;
         this.blinkRate = 7;
         this.invincible = false;
@@ -142,7 +143,7 @@ export default class Player extends Actor {
         if (this.bulletTimer <= 0 || this.bulletTimer == undefined)
         {
             this.bulletTimer = this.fireRate;
-            this.bullets.push(new Bullet(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'player_bullet'), 1, 1400, 1));
+            this.bullets.push(new PlayerBullet(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'player_bullet'), 1, 1400, 1));
         }
     }
     

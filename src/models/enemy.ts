@@ -40,12 +40,15 @@ export default abstract class Enemy extends Actor {
         super(game, sprite, health, speed);
         this.gameMaster = gameMaster;
         this.score = score;
+        this.blinkColor = Phaser.Color.RED;
+
         this.destroyed = false;
         this.destroyedEffect = 'explosion_sm';
+
+        this.sprite.animations.add('move', [0, 1], 10, true);
         game.physics.arcade.enable(this.sprite);
         this.sprite.body.immovable = true;
-        this.sprite.animations.add('move', [0, 1], 10, true);
-        this.blinkColor = Phaser.Color.RED;
+        this.sprite.outOfBoundsKill = true;
     }
 
     /**

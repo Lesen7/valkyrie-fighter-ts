@@ -3,14 +3,21 @@ import * as Phaser from 'phaser-ce';
 // Class imports
 import Actor from './models/actor';
 import Player from './models/player';
+
 import Enemy from './models/enemy';
 import Pod from './models/pod';
+import Fighter from './models/fighter';
+
 import ControlLayout from './models/input';
+
 import Bullet from './models/bullet';
+
 import GameMaster from './models/gameMaster';
 import GamePhase from './models/gamePhase';
 import SpawnPoint from './models/spawnPoint';
+
 import Effect from './models/effect';
+
 import { Sprite } from 'phaser-ce';
 import { start } from 'repl';
 
@@ -46,10 +53,12 @@ window.onload = () => {
 
         // Player sprites/images
         game.load.image('player_bullet', 'assets/sprites/vf1/player_bullet.png');
+        game.load.spritesheet('enemy_pellet', 'assets/sprites/enemy_pellet/enemy_pellet.png', 8, 8);
         game.load.spritesheet('vf1_sp_sh', 'assets/sprites/vf1/vf1_sp_sh.png', 32, 37);
 
         // Enemy sprites/images
         game.load.spritesheet('pod_move', 'assets/sprites/reguld/reguld_move.png', 33, 37);
+        game.load.spritesheet('fighter_move', 'assets/sprites/gnerl/gnerl_move.png', 33, 37);
         game.load.spritesheet('explosion_sm', 'assets/sprites/explosion_sm/explosion_sm.png', 33, 37);
 
         // UI sprites/images
@@ -89,7 +98,15 @@ window.onload = () => {
     let scorePlate: Phaser.Sprite;
     let healthBars: Phaser.Sprite[];
 
+    // Test variables
+    let fighter;
+    let fighterSprite: Phaser.Sprite;
+
     function create() {
+        // Test inits
+        fighterSprite = game.add.sprite(game.width / 2, game.height / 2, 'fighter_move');
+        fighter = new Fighter(game, gameMaster, fighterSprite);
+
         // Game variable initializations
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -165,6 +182,10 @@ window.onload = () => {
             // Special collisions
             game.physics.arcade.collide(gameMaster.player.sprite, playerPlate);
             game.physics.arcade.collide(gameMaster.player.sprite, scorePlate);
+            gameMaster.enemyBullets.forEach((enemyBullet, index) => {
+                game.physics.arcade.collide(enemyBullet.sprite, playerPlate, () => {enemyBullet.destroy();});
+                game.physics.arcade.collide(enemyBullet.sprite, scorePlate, () => {enemyBullet.destroy();});
+            })
             
             // Scroll backgrounds
             if(gameMaster.isPaused == false) {

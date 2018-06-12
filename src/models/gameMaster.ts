@@ -5,6 +5,7 @@ import GamePhase from './gamePhase';
 import ControlLayout from './input';
 import { spawn } from 'child_process';
 import Effect from './effect';
+import Bullet from './bullet';
 
 export default class GameMaster {
     /**
@@ -27,6 +28,10 @@ export default class GameMaster {
      * A list of all of the game's existing enemies.
      */
     enemies: Enemy[];
+    /**
+     * A list of all of the game's enemy projectiles.
+     */
+    enemyBullets: any[];
     /**
      * A list of all of the game's existing visual effects.
      */
@@ -51,6 +56,7 @@ export default class GameMaster {
     constructor() {
         this.score = 0;
         this.enemies = [];
+        this.enemyBullets = [];
         this.effects = [];
         this.isPaused = false;
     }
@@ -82,7 +88,6 @@ export default class GameMaster {
      */
     initialize() {
         this.currentPhase = this.getPhase("combat D");
-        console.log(this.currentPhase);
         this.isPaused = false;
     }
 
@@ -124,6 +129,9 @@ export default class GameMaster {
                 enemy.update();
                 this.cleanUp(enemy, this.enemies);
             });
+            this.enemyBullets.forEach((enemyBullet, index) => {
+                enemyBullet.update();
+            });
             this.effects.forEach((effect, index) => {
                 effect.update();
                 this.cleanUp(effect, this.effects);
@@ -139,6 +147,9 @@ export default class GameMaster {
             });
             this.enemies.forEach((enemy, index) => {
                 enemy.stop();
+            });
+            this.enemyBullets.forEach((enemyBullet, index) => {
+                enemyBullet.stop();
             });
             this.effects.forEach((effect, index) => {
                 effect.stop();
