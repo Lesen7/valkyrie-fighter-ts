@@ -39,7 +39,7 @@ export default class BulletPellet extends Bullet {
 
     update() {
         this.move(this.xDirection, this.yDirection);
-        this.game.physics.arcade.overlap(this.sprite, gameMaster.player.sprite, () => {gameMaster.player.takeDamage(1);});
+        this.game.physics.arcade.overlap(this.sprite, gameMaster.player.sprite, () => {gameMaster.player.takeDamage(1); this.destroy();});
         this.sprite.animations.play('move');
     }
 }
