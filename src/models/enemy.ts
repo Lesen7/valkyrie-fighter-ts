@@ -95,8 +95,8 @@ export default abstract class Enemy extends Actor {
             if(this.health <= 0 || this.sprite.position.y <= -this.game.height) {
                 this.destroy();
             }
-            this.move();
         }
+        this.move();
         this.game.physics.arcade.overlap(this.sprite, this.gameMaster.player.sprite, () => {this.gameMaster.player.takeDamage(1);});
     }
 }

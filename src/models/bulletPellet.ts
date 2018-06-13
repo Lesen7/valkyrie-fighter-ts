@@ -15,6 +15,25 @@ export default class BulletPellet extends Bullet {
     }
 
     aimAtPlayer(axis: string) {
+        let direction;
+        if(axis.toLowerCase() == 'x') {
+            if(this.sprite.x - gameMaster.player.sprite.x > 0) {
+                direction = 1 / this.sprite.x - gameMaster.player.sprite.x;
+            } else {
+                direction = 1 / this.sprite.x + gameMaster.player.sprite.x;
+            }
+        }
+        if(axis.toLowerCase() == 'y') {
+            if(this.sprite.y - gameMaster.player.sprite.y > 0) {
+                direction = 1 / this.sprite.y - gameMaster.player.sprite.y;
+            } else {
+                direction = 1 / this.sprite.y + gameMaster.player.sprite.y;
+            }
+        }
+        return direction;
+    }
+    
+    homeAtPlayer(axis: string) {
         let direction: number;
         if(axis.toLowerCase() == 'x') {
             if(this.sprite.x < gameMaster.player.sprite.x) {

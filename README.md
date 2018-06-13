@@ -19,7 +19,7 @@
 
 **Estilo visual/artístico:** Pixel art (estilo NES)
 
-**Herramientas:** Phaser.js (versión 3), VS Code, GraphicsGale, GIMP
+**Herramientas:** Phaser.js (CE), VS Code, GraphicsGale, GIMP
 
 **Descripción:** Basado en el anime de ciencia ficción SDF Macross. Todos los recursos gráficos han sido creados teniendo como referencia los diseños originales de Macross, y el juego en sí está inspirado en una especie de juego arcade ficticio que existe en la propia serie.
 

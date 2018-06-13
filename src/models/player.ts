@@ -91,6 +91,7 @@ export default class Player extends Actor {
         this.opaqueTime = this.blinkRate;
         this.transparentTime = this.blinkRate;
 
+        // Physics inits
         game.physics.arcade.enable(this.sprite);
         this.sprite.body.allowGravity = false;
         this.sprite.body.collideWorldBounds = true;
