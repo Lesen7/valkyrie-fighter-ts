@@ -16,10 +16,6 @@ export default class Fighter extends Enemy {
      * Counts down the attack rate.
      */
     attackTimer: number;
-    /**
-     * A pool of bullets for the enemy.
-     */
-    bullets: BulletPellet[];
     shootOffsetX: number;
     shootOffsetY: number;
 
@@ -35,8 +31,6 @@ export default class Fighter extends Enemy {
 
         this.shootOffsetX = 10;
         this.shootOffsetY = 40;
-
-        this.bullets = [];
     }
 
     attack() {
