@@ -8,12 +8,13 @@ export default class BulletPellet extends Bullet {
 
     constructor(game: Game, sprite: Sprite, health: number, speed: number, damage: number) {
         super(game, sprite, health, speed, damage);
+
         this.sprite.animations.add('move', [0, 1], 10, true);
         this.vector = this.aimAtPlayer();
     }
 
     aimAtPlayer() {
-        let aimVector = new Vector2D(gameMaster.player.sprite.x - this.sprite.x, gameMaster.player.sprite.y - this.sprite.y);
+        let aimVector = new Vector2D(gameMaster.player.sprite.centerX - this.sprite.x, gameMaster.player.sprite.centerY - this.sprite.y);
         let uVector = aimVector.normalize();
         return uVector;
     }
