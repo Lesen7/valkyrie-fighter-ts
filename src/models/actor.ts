@@ -1,6 +1,7 @@
 import { Sprite, Game } from 'phaser-ce';
 import GameMaster from './gameMaster';
 import gameMaster from '../index';
+import Vector2D from '../utils/vector2D';
 
 export default abstract class Actor {
     // Properties
@@ -33,9 +34,9 @@ export default abstract class Actor {
     * @param x defines how fast the object should move on the X axis.
     * @param y defines how fast the object should move on the y axis.
     */
-    move(x: number, y: number) {
-        this.sprite.body.velocity.x += x;
-        this.sprite.body.velocity.y += y;
+    move(vector: Vector2D) {
+        this.sprite.body.velocity.x += vector.x;
+        this.sprite.body.velocity.y += vector.y;
     }
 
     /**

@@ -3,6 +3,7 @@ import * as Phaser from 'phaser-ce';
 import Actor from "./actor";
 import GameMaster from './gameMaster';
 import gameMaster from '../index';
+import Vector2D from '../utils/vector2D';
 
 export default abstract class Bullet extends Actor {
     // Properties
@@ -40,13 +41,9 @@ export default abstract class Bullet extends Actor {
      * @param x The X component of the movement vector.
      * @param y The y component of the movement vector.
      */
-    move(x?: number, y?: number) {
-        if(x == null || x == undefined || y == null || y == undefined) {
-            this.sprite.body.velocity.y -= this.speed;
-        } else {
-            this.sprite.body.velocity.x = x;
-            this.sprite.body.velocity.y = y;
-        }
+    move(vector: Vector2D) {
+        this.sprite.body.velocity.x += vector.x * this.speed;
+        this.sprite.body.velocity.y += vector.y * this.speed;
     }
 
     /**
@@ -55,6 +52,5 @@ export default abstract class Bullet extends Actor {
     */
     update () {
         super.update();
-        this.move();
     }
 }

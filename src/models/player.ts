@@ -6,6 +6,7 @@ import gamePhase from './gamePhase';
 import GameMaster from './gameMaster';
 import gameMaster from '../index';
 import PlayerBullet from './playerBullet';
+import Vector2D from '../utils/vector2D';
 
 export default class Player extends Actor {
     /**
@@ -182,19 +183,19 @@ export default class Player extends Actor {
 
             // Player input
             if (this.keys.left.isDown) {
-                this.move(-this.speed, 0);
+                this.move(new Vector2D(-this.speed, 0));
                 this.sprite.animations.play('turn_l');
             } else if (this.keys.right.isDown) {
-                this.move(this.speed, 0);
+                this.move(new Vector2D(this.speed, 0));
                 this.sprite.animations.play('turn_r');
             } else {
                 this.sprite.animations.play('thrusters');
                 this.sprite.body.velocity.x = 0;
             }
             if (this.keys.up.isDown) {
-                this.move(0, -this.speed);
+                this.move(new Vector2D(0, -this.speed));
             } else if (this.keys.down.isDown) {
-                this.move(0, this.speed);
+                this.move(new Vector2D(0, this.speed));
             } else {
                 this.sprite.body.velocity.y = 0;
             }

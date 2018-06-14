@@ -40,11 +40,13 @@ export default class Fighter extends Enemy {
     }
 
     attack() {
-        gameMaster.enemyBullets.push(new BulletPellet(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'enemy_pellet'), 1, 1, 1));
+        gameMaster.enemyBullets.push(new BulletPellet(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'enemy_pellet'), 1, 100, 1));
     }
 
     update() {
-        super.update();
+        if(this.sprite.y > this.game.height / 2) {
+            super.update();
+        }
         
         if(this.destroyed == false) {
             /**
