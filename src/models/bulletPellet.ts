@@ -45,7 +45,9 @@ export default class BulletPellet extends Bullet {
     update() {
         this.sprite.body.velocity.x = 0;
         this.sprite.body.velocity.y = 0;
+
         this.move(this.vector);
+        
         this.game.physics.arcade.overlap(this.sprite, gameMaster.player.sprite, () => {gameMaster.player.takeDamage(1); this.destroy();});
         this.sprite.animations.play('move');
     }
