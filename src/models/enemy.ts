@@ -72,8 +72,12 @@ export default abstract class Enemy extends Actor {
      */
     destroy() {
         this.sprite.kill();
-        gameMaster.score += this.score;
+        if(this.sprite.inWorld == true) {
+            gameMaster.score += this.score;
+        }
+
         this.destroyed = true;
+        
         gameMaster.effects.push(new Effect(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, this.destroyedEffect)));
     }
 
@@ -89,12 +93,14 @@ export default abstract class Enemy extends Actor {
             else {
                 this.blinkTimer--;
             }
-            this.sprite.animations.play('move');
-            if(this.health <= 0 || this.sprite.position.y <= -this.game.height) {
+            this.move();
+
+            if (this.health <= 0 || this.sprite.inWorld == false) {
                 this.destroy();
             }
+
+            this.game.physics.arcade.overlap(this.sprite, gameMaster.player.sprite, () => {gameMaster.player.takeDamage(1);});
+            this.sprite.animations.play('move');
         }
-        this.move();
-        this.game.physics.arcade.overlap(this.sprite, gameMaster.player.sprite, () => {gameMaster.player.takeDamage(1);});
     }
 }

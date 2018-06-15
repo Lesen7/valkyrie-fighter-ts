@@ -63,7 +63,7 @@ export default abstract class Actor {
     * Updates the properties of the game object and essentially executes its lifetime.
     */
     update() {
-        if (this.health <= 0) {
+        if (this.health <= 0 || this.sprite.inWorld == false) {
             this.destroy();
         }
     }

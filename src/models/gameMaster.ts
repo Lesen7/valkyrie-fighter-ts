@@ -6,6 +6,7 @@ import ControlLayout from './input';
 import { spawn } from 'child_process';
 import Effect from './effect';
 import Bullet from './bullet';
+import { printAtInterval } from '../utils/printUtils';
 
 export default class GameMaster {
     /**
