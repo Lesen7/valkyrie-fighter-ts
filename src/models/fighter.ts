@@ -19,10 +19,11 @@ export default class Fighter extends Enemy {
     shootOffsetX: number;
     shootOffsetY: number;
 
-    constructor(game: Game, gameMaster: GameMaster, sprite: Sprite) {
-        super(game, gameMaster, sprite);
+    constructor(game: Game, sprite: Sprite) {
+        super(game, sprite);
         this.health = 2;  
         this.speed = 120;
+
         this.attackRate = 120;
         this.attackTimer = 0;
 
@@ -34,7 +35,7 @@ export default class Fighter extends Enemy {
     }
 
     attack() {
-        gameMaster.enemyBullets.push(new BulletPellet(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'enemy_pellet'), 1, this.speed * 1.5, 1));
+        gameMaster.enemyBullets.push(new BulletPellet(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'enemy_pellet'), 1, this.speed * 1.5));
     }
 
     update() {

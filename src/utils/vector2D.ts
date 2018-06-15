@@ -28,7 +28,7 @@ export default class Vector2D {
     /**
      * Returns the normalized vector.
      */
-    normalize() {
+    normalize(): Vector2D {
         return new Vector2D(this.x / this.getLength(), this.y / this.getLength());
     }
 }

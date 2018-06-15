@@ -25,13 +25,11 @@ export default class SpawnPoint extends Actor {
     /**
      * An object that spawns enemies at a certain rate. Usually located out of bounds.
      * @param game The Phaser game the sprite will be added to.
-     * @param gameMaster The Game Master the object will be added to.
      * @param sprite The sprite for the object.
      * @param frequency The frequency at which enemies will spawn.
      */
-    constructor(game: Game, gameMaster, sprite: Sprite, frequency: number) {
+    constructor(game: Game, sprite: Sprite, frequency: number) {
         super(game, sprite);
-        this.gameMaster = gameMaster;
         this.sprite = sprite;
         this.frequency = frequency;
         this.top = 100;
@@ -49,9 +47,9 @@ export default class SpawnPoint extends Actor {
             this.counter = 0;
             return;
         } else if(result >= 0.6 && result < 0.8) {
-            this.spawn(new Pod(this.game, this.gameMaster, this.game.add.sprite(this.sprite.x, this.sprite.y, 'pod_move')));
+            this.spawn(new Pod(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, 'pod_move')));
         } else if(result >= 0.8 && result <= 0.9) {
-            this.spawn(new Fighter(this.game, this.gameMaster, this.game.add.sprite(this.sprite.x, this.sprite.y, 'fighter_move')));
+                this.spawn(new Fighter(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, 'fighter_move')));
         }
     }
 

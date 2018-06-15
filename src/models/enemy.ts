@@ -30,15 +30,13 @@ export default abstract class Enemy extends Actor {
     /**
      * 
      * @param game The Phaser game the sprite will be added to.
-     * @param gameMaster The Game Master the object will be added to.
      * @param sprite The sprite for the enemy.
      * @param health Defines how much health the enemy will have.
      * @param speed Defines how fast the enemy will move.
      * @param score The amount of points the enemy gives upon destruction.
      */
-    constructor(game: Game, gameMaster: GameMaster, sprite: Sprite, health?: number, speed?: number, score?: number) {
+    constructor(game: Game, sprite: Sprite, health?: number, speed?: number, score?: number) {
         super(game, sprite, health, speed);
-        this.gameMaster = gameMaster;
         this.score = score;
         this.blinkColor = Phaser.Color.RED;
 
@@ -76,7 +74,7 @@ export default abstract class Enemy extends Actor {
         this.sprite.kill();
         gameMaster.score += this.score;
         this.destroyed = true;
-        this.gameMaster.effects.push(new Effect(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, this.destroyedEffect)));
+        gameMaster.effects.push(new Effect(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, this.destroyedEffect)));
     }
 
     /**
@@ -97,6 +95,6 @@ export default abstract class Enemy extends Actor {
             }
         }
         this.move();
-        this.game.physics.arcade.overlap(this.sprite, this.gameMaster.player.sprite, () => {this.gameMaster.player.takeDamage(1);});
+        this.game.physics.arcade.overlap(this.sprite, gameMaster.player.sprite, () => {gameMaster.player.takeDamage(1);});
     }
 }

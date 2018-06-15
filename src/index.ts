@@ -20,6 +20,7 @@ import Effect from './models/effect';
 
 import { Sprite } from 'phaser-ce';
 import { start } from 'repl';
+import leftPad from './utils/formatUtils';
 
 let gameMaster = new GameMaster();
 export default gameMaster;
@@ -105,7 +106,7 @@ window.onload = () => {
     function create() {
         // Test inits
         fighterSprite = game.add.sprite(game.width / 2, game.height / 2, 'fighter_move');
-        fighter = new Fighter(game, gameMaster, fighterSprite);
+        fighter = new Fighter(game, fighterSprite);
 
         // Game variable initializations
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -163,9 +164,9 @@ window.onload = () => {
             new GamePhase('combat SS', 6, 30000)
         ];
         spawnPoints = [
-            new SpawnPoint(game, gameMaster, game.add.sprite(game.width / 2, 5), 1.1),
-            new SpawnPoint(game, gameMaster, game.add.sprite(120, 5), 1),
-            new SpawnPoint(game, gameMaster, game.add.sprite(game.width - 152, 5), 1.2)
+            new SpawnPoint(game, game.add.sprite(game.width / 2, 5), 1.1),
+            new SpawnPoint(game, game.add.sprite(120, 5), 1),
+            new SpawnPoint(game, game.add.sprite(game.width - 152, 5), 1.2)
         ];
         gameMaster.addPlayer(player);
         gameMaster.addGamePhases(gamePhases);
@@ -199,11 +200,6 @@ window.onload = () => {
                 pauseText.anchor.setTo(0.5, 0.5);
             }
         }
-    }
-
-    function leftPad(text: string, pad: number, char='0'): string {
-        pad = pad - text.length + 1;
-        return pad > 0 ? new Array(pad).join(char) + text : text;
     }
 
     function addHealthBars(startPoint: number, xOffset: number, ySpacing: number) {

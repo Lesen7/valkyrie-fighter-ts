@@ -7,6 +7,7 @@ import GameMaster from './gameMaster';
 import gameMaster from '../index';
 import PlayerBullet from './playerBullet';
 import Vector2D from '../utils/vector2D';
+import * as Phaser from 'phaser-ce';
 
 export default class Player extends Actor {
     /**
@@ -107,9 +108,12 @@ export default class Player extends Actor {
     takeDamage(damage: number) {
         if(this.invincible == false) {
             this.health -= damage;
+
             this.healthBars[0].kill();
             this.healthBars.shift();
+
             this.invincible = true;
+            
             this.blinkTimer = this.blinkTime;
         }
     }
@@ -163,11 +167,11 @@ export default class Player extends Actor {
             }
 
             // Count down the fire rate counter
-            if (this.bulletTimer >= 0) {
+            if(this.bulletTimer >= 0) {
                 this.bulletTimer--;
             }
             // Update the player's bullets
-            if (this.bullets != null) {
+            if(this.bullets != null) {
                 this.bullets.forEach((bullet, index) => {
                     bullet.sprite.body.velocity.y = 0;
                     bullet.update();
@@ -182,24 +186,24 @@ export default class Player extends Actor {
             this.sprite.body.velocity.y = 0;
 
             // Player input
-            if (this.keys.left.isDown) {
+            if(this.keys.left.isDown) {
                 this.move(new Vector2D(-this.speed, 0));
                 this.sprite.animations.play('turn_l');
-            } else if (this.keys.right.isDown) {
+            } else if(this.keys.right.isDown) {
                 this.move(new Vector2D(this.speed, 0));
                 this.sprite.animations.play('turn_r');
             } else {
                 this.sprite.animations.play('thrusters');
                 this.sprite.body.velocity.x = 0;
             }
-            if (this.keys.up.isDown) {
+            if(this.keys.up.isDown) {
                 this.move(new Vector2D(0, -this.speed));
-            } else if (this.keys.down.isDown) {
+            } else if(this.keys.down.isDown) {
                 this.move(new Vector2D(0, this.speed));
             } else {
                 this.sprite.body.velocity.y = 0;
             }
-            if (this.keys.fire.isDown) {
+            if(this.keys.fire.isDown) {
                 this.attack();
             }
         }           

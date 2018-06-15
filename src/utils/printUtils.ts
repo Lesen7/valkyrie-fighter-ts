@@ -7,8 +7,8 @@ export function printAtInterval(interval: number, text: string) {
     let counter = 0;
     if (counter >= interval) {
         console.log(text);
-    }
-    while(counter < interval) {
+        counter = 0;
+    } else if(counter < interval) {
         counter ++;
     }
 }

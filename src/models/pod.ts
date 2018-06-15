@@ -26,8 +26,8 @@ export default class Pod extends Enemy {
      * @param gameMaster The Game Master the object will be added to.
      * @param sprite The sprite for the object.
      */
-    constructor(game: Game, gameMaster: GameMaster, sprite: Sprite) {
-        super(game, gameMaster, sprite);
+    constructor(game: Game, sprite: Sprite) {
+        super(game, sprite);
         this.health = 3;  
         this.speed = 50;
         this.XAmplitude = 80;

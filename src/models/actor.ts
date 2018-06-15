@@ -6,7 +6,6 @@ import Vector2D from '../utils/vector2D';
 export default abstract class Actor {
     // Properties
     game: Game;
-    gameMaster: GameMaster;
     sprite: Sprite;
     health: number;
     speed: number;

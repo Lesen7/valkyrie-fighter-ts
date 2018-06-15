@@ -158,6 +158,7 @@ export default class GameMaster {
                 spawnPoint.stop();
             });
         }
+
         if(this.player.keys.pause.justDown) {
             if(this.isPaused == true) {
                 this.isPaused = false;
@@ -165,6 +166,7 @@ export default class GameMaster {
                 this.isPaused = true;
             }
         }
+        
         if(this.score >= this.currentPhase.maxScore) {
             this.currentPhase = this.getPhase(this.currentPhase.maxDifficulty + 1);
         }

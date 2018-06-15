@@ -20,9 +20,10 @@ export default abstract class Bullet extends Actor {
     * @param speed Defines how fast the bullet will move.
     * @param damage Defines how much damage the bullet will deal on impact.
     */
-    constructor(game: Game, sprite: Sprite, health: number, speed: number, damage: number) {
+    constructor(game: Game, sprite: Sprite, health?: number, speed?: number, damage?: number) {
         super(game, sprite, health, speed);
         this.damage = damage;
+
         this.sprite.checkWorldBounds = true;
         this.sprite.outOfBoundsKill = true;
         game.physics.arcade.enable(this.sprite);

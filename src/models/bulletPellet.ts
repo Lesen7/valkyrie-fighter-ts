@@ -6,19 +6,41 @@ import Vector2D from '../utils/vector2D';
 export default class BulletPellet extends Bullet {
     vector: Vector2D;
 
-    constructor(game: Game, sprite: Sprite, health: number, speed: number, damage: number) {
+    /**
+     * A bullet that aims to hit the player when created.
+     * @param game The Phaser game the sprite will be added to.
+     * @param sprite The sprite for the bullet.
+     * @param health Essentially defines how many enemies the bullet can hit before being destroyed.
+     * @param speed Defines how fast the bullet will move.
+     * @param damage Defines how much damage the bullet will deal on impact.
+     */
+    constructor(game: Game, sprite: Sprite, health?: number, speed?: number, damage?: number) {
         super(game, sprite, health, speed, damage);
+        this.health = 1;
+        if(this.speed == undefined || this.speed == null) {
+            this.speed = 150;
+        }
+        if(this.damage == undefined || this.damage == null) {
+            this.damage = 1;
+        }
 
         this.sprite.animations.add('move', [0, 1], 10, true);
         this.vector = this.aimAtPlayer();
     }
 
-    aimAtPlayer() {
+    /**
+     * Gets the unit vector that aims towards the player from the bullet's current position.
+     */
+    aimAtPlayer(): Vector2D {
         let aimVector = new Vector2D(gameMaster.player.sprite.centerX - this.sprite.x, gameMaster.player.sprite.centerY - this.sprite.y);
-        let uVector = aimVector.normalize();
-        return uVector;
+        let unitVector = aimVector.normalize();
+        return unitVector;
     }
     
+    /**
+     * A simpler function to aim at player that causes the projectile to move in zig-zag. Mostly for aesthetic purposes, otherwise use aimAtPlayer.
+     * @param axis The axis that should be aimed that.
+     */
     homeAtPlayer(axis: string) {
         let direction: number;
         if(axis.toLowerCase() == 'x') {
@@ -42,6 +64,10 @@ export default class BulletPellet extends Bullet {
         return direction;
     }
 
+    /**
+     * Cancels out the acceleration from the physics engine and moves the bullet accordingly, checking for collision with the player.
+     * A blinking animation is played permanently to make the player more easily aware of the projectile.
+     */
     update() {
         this.sprite.body.velocity.x = 0;
         this.sprite.body.velocity.y = 0;
