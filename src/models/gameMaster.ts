@@ -7,6 +7,7 @@ import { spawn } from 'child_process';
 import Effect from './effect';
 import Bullet from './bullet';
 import { printAtInterval } from '../utils/printUtils';
+import { Game, BitmapText } from 'phaser-ce';
 
 export default class GameMaster {
     /**
@@ -21,6 +22,10 @@ export default class GameMaster {
      * The phase the game is currently on.
      */
     currentPhase: GamePhase;
+    /**
+     * The last active phase, excluding advancing phases.
+     */
+    latestPhase: GamePhase;
     /**
      * The list of spawn points that the game's enemies will be created at.
      */
@@ -49,6 +54,26 @@ export default class GameMaster {
      * The last phase the game was in.
      */
     previousPhase: GamePhase;
+    /**
+     * The text that will appear when the game advances to the next phase.
+     */
+    advanceText: BitmapText;
+    /**
+     * Defines how often the on-screen message for a phase change will blink. 
+     */
+    blinkTime: number;
+    /**
+     * Counts down the blink time.
+     */
+    private blinkTimer: number;
+    /**
+     * Defines how much time should be given between phases.
+     */
+    phaseChangeTime: number;
+    /**
+     * Counts down the phase change time.
+     */
+    private phaseChangeTimer: number;
 
     /**
      * A Singleton that will control most of the game's flow and behaviors, and store important game properties and objects.
@@ -56,6 +81,11 @@ export default class GameMaster {
      */
     constructor() {
         this.score = 0;
+        this.phaseChangeTime = 300;
+        this.phaseChangeTimer = this.phaseChangeTime;
+        this.blinkTime = 40;
+        this.blinkTimer = this.blinkTime;
+
         this.enemies = [];
         this.enemyBullets = [];
         this.effects = [];
@@ -89,8 +119,12 @@ export default class GameMaster {
      */
     initialize() {
         this.currentPhase = this.getPhase("combat D");
-        this.isPaused = false;
         this.currentPhase.availableEnemies = ['pod', '', '', '', '', '', 'fighter', '', '', ''];
+        this.isPaused = false;
+        
+        this.advanceText = this.player.game.add.bitmapText(this.player.game.width / 2, this.player.game.height / 2, 'smb3', 'phase change', 32);
+        this.advanceText.anchor.setTo(0.5, 0.5);
+        this.advanceText.alpha = 0;
     }
 
     /**
@@ -116,8 +150,28 @@ export default class GameMaster {
             list.splice(object, 1);
         }
     }
-    displayPauseMenu() {
+    /**
+     * Advance to the next phase.
+     */
+    nextPhase() {
+        if(this.phaseChangeTimer >= 0) {
+            this.phaseChangeTimer --;
+            if(this.blinkTimer <= 0 && this.advanceText.alpha == 1) {
+                this.advanceText.alpha = 0;
+                this.blinkTimer = this.blinkTime;
+            } else if(this.blinkTimer <= 0 && this.advanceText.alpha == 0){
+                this.advanceText.alpha = 1;
+                this.blinkTimer = this.blinkTime
+            } else {
+                this.blinkTimer --;
+            }
+        } else {
+            this.advanceText.alpha = 0;
 
+            this.currentPhase = this.getPhase(this.latestPhase.maxDifficulty + 1);
+            console.log(this.currentPhase);
+            this.phaseChangeTimer = this.phaseChangeTime;
+        }
     }
     
     /**
@@ -125,7 +179,7 @@ export default class GameMaster {
      * Iterates through object pools to update them and, if necessary, deletes them for optimization.
      */
     update() {
-        if(this.currentPhase.maxDifficulty > 0 && this.isPaused == false) {
+        if(!this.isPaused) {
             this.player.update();
             this.enemies.forEach((enemy, index) => {
                 enemy.update();
@@ -159,7 +213,7 @@ export default class GameMaster {
             this.spawnPoints.forEach((spawnPoint, index) => {
                 spawnPoint.stop();
             });
-        }
+        } 
 
         if(this.player.keys.pause.justDown) {
             if(this.isPaused == true) {
@@ -170,16 +224,21 @@ export default class GameMaster {
         }
         
         if(this.score >= this.currentPhase.maxScore) {
-            this.currentPhase = this.getPhase(this.currentPhase.maxDifficulty + 1);
+            this.latestPhase = this.currentPhase;
+            this.advanceText.alpha = 1;
+            this.currentPhase = this.getPhase('advance');
         }
 
         switch (this.currentPhase) {
-            case this.getPhase('Combat D'):
+            case this.getPhase('combat D'):
                 this.currentPhase.setEnemies(['pod', 'fighter', '', '', '', '', '', '', '', '']);
-            case this.getPhase('Combat C'):
                 break;
-        
-            default:
+            case this.getPhase('combat C'):
+                this.currentPhase.setEnemies(['pod', 'fighter', 'pod', 'pod', 'fighter', '', '', '', '', '']);
+                break;
+            case this.getPhase('advance'):
+                this.currentPhase.setEnemies(['', '', '', '', '', '', '', '', '', '']);
+                this.nextPhase();
                 break;
         }
     }

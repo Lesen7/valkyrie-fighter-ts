@@ -154,10 +154,10 @@ window.onload = () => {
 
         // Creating and initializing the GameMaster object
         gamePhases = [
-            new GamePhase('advance', -1, -1),
+            new GamePhase('advance', -1, undefined),
             new GamePhase('scramble', 0, 0),
-            new GamePhase('combat D', 1, 5000),
-            new GamePhase('combat C', 2, 10000),
+            new GamePhase('combat D', 1, 300),
+            new GamePhase('combat C', 2, 1000),
             new GamePhase('combat B', 3, 15000),
             new GamePhase('combat A', 4, 20000),
             new GamePhase('combat S', 5, 25000),
@@ -175,30 +175,28 @@ window.onload = () => {
         gameMaster.player.healthBars = healthBars;
     }
     function update() {
-        if(gameMaster.currentPhase.maxDifficulty >= 0) {
-            // Game object updates
-            gameMaster.update();
-            scoreText.text = scoreMessage + leftPad(gameMaster.score.toString(), 8, "0").split('').join('\n');
-    
-            // Special collisions
-            game.physics.arcade.collide(gameMaster.player.sprite, playerPlate);
-            game.physics.arcade.collide(gameMaster.player.sprite, scorePlate);
-            gameMaster.enemyBullets.forEach((enemyBullet, index) => {
-                game.physics.arcade.collide(enemyBullet.sprite, playerPlate, () => {enemyBullet.destroy();});
-                game.physics.arcade.collide(enemyBullet.sprite, scorePlate, () => {enemyBullet.destroy();});
-            })
-            
-            // Scroll backgrounds
-            if(gameMaster.isPaused == false) {
-                if(pauseText != undefined) {
-                    pauseText.text = ' ';
-                }
-                background0.tilePosition.y += 0.4;
-                background1.tilePosition.y += 0.5;
-            } else {
-                pauseText.text = pauseMessage;
-                pauseText.anchor.setTo(0.5, 0.5);
+        // Game object updates
+        gameMaster.update();
+        scoreText.text = scoreMessage + leftPad(gameMaster.score.toString(), 8, "0").split('').join('\n');
+
+        // Special collisions
+        game.physics.arcade.collide(gameMaster.player.sprite, playerPlate);
+        game.physics.arcade.collide(gameMaster.player.sprite, scorePlate);
+        gameMaster.enemyBullets.forEach((enemyBullet, index) => {
+            game.physics.arcade.collide(enemyBullet.sprite, playerPlate, () => {enemyBullet.destroy();});
+            game.physics.arcade.collide(enemyBullet.sprite, scorePlate, () => {enemyBullet.destroy();});
+        })
+        
+        // Scroll backgrounds
+        if(gameMaster.isPaused == false) {
+            if(pauseText != undefined) {
+                pauseText.text = ' ';
             }
+            background0.tilePosition.y += 0.4;
+            background1.tilePosition.y += 0.5;
+        } else {
+            pauseText.text = pauseMessage;
+            pauseText.anchor.setTo(0.5, 0.5);
         }
     }
 
