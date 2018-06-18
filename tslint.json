@@ -16,7 +16,7 @@
       ],
       "trailing-comma":false,
       "quotemark": [true, "single"],
-      "interface-name": false,
+      "interface-name": true,
       "member-ordering": false
     }
   }
