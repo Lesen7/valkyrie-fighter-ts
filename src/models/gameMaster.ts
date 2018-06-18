@@ -90,14 +90,15 @@ export default class GameMaster {
     initialize() {
         this.currentPhase = this.getPhase("combat D");
         this.isPaused = false;
+        this.currentPhase.availableEnemies = ['pod', '', '', '', '', '', 'fighter', '', '', ''];
     }
 
     /**
      * Returns a game phase specified by either its name or difficulty.
      * @param selectPhase The phase to be searched. Specify either the name as a string, or the difficulty as a number.
      */
-    getPhase(selectPhase: string | number) {
-        if(typeof selectPhase == "string") {
+    getPhase(selectPhase: string | number): GamePhase {
+        if(typeof selectPhase == 'string') {
             return this.gamePhases.filter(phase => selectPhase == phase.name)[0];
         } else {
             return this.gamePhases.filter(phase => selectPhase == phase.maxDifficulty)[0];
@@ -170,6 +171,16 @@ export default class GameMaster {
         
         if(this.score >= this.currentPhase.maxScore) {
             this.currentPhase = this.getPhase(this.currentPhase.maxDifficulty + 1);
+        }
+
+        switch (this.currentPhase) {
+            case this.getPhase('Combat D'):
+                this.currentPhase.setEnemies(['pod', 'fighter', '', '', '', '', '', '', '', '']);
+            case this.getPhase('Combat C'):
+                break;
+        
+            default:
+                break;
         }
     }
 }

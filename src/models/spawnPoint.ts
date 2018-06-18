@@ -31,6 +31,7 @@ export default class SpawnPoint extends Actor {
     constructor(game: Game, sprite: Sprite, frequency: number) {
         super(game, sprite);
         this.sprite = sprite;
+
         this.frequency = frequency;
         this.top = 100;
         this.counter = 0;
@@ -42,14 +43,23 @@ export default class SpawnPoint extends Actor {
      * If it's greater or equal, spanws an enemy.
      */
     roll() {
-        let result = Math.random();
-        if(result < 0.6) {
-            this.counter = 0;
-            return;
-        } else if(result >= 0.6 && result < 0.8) {
-            this.spawn(new Pod(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, 'pod_move')));
-        } else if(result >= 0.8 && result <= 0.9) {
+        let spawnedEnemy = gameMaster.currentPhase.availableEnemies[Math.floor(Math.random() * gameMaster.currentPhase.availableEnemies.length)];
+        switch (spawnedEnemy) {
+            case 'pod':
+                this.spawn(new Pod(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, 'pod_move')));
+                break;
+            case 'fighter':
                 this.spawn(new Fighter(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, 'fighter_move')));
+            case 'superPod':
+                break;
+            case 'boosterPod':
+                break;
+            case 'ger':
+                break;
+            case 'rau':
+                break;
+            default:
+                break;
         }
     }
 

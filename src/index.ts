@@ -164,9 +164,9 @@ window.onload = () => {
             new GamePhase('combat SS', 6, 30000)
         ];
         spawnPoints = [
-            new SpawnPoint(game, game.add.sprite(game.width / 2, 5), 1.1),
-            new SpawnPoint(game, game.add.sprite(120, 5), 1),
-            new SpawnPoint(game, game.add.sprite(game.width - 152, 5), 1.2)
+            new SpawnPoint(game, game.add.sprite(game.width / 2, 5), 0.4),
+            new SpawnPoint(game, game.add.sprite(120, 5), 0.5),
+            new SpawnPoint(game, game.add.sprite(game.width - 152, 5), 0.4)
         ];
         gameMaster.addPlayer(player);
         gameMaster.addGamePhases(gamePhases);
