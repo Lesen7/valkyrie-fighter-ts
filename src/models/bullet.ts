@@ -11,6 +11,7 @@ export default abstract class Bullet extends Actor {
      * Defines how much damage the bullet will deal on impact.
      */
     damage: number;
+    sprite: Sprite;
 
     /**
     * A projectile object meant to hit and damage other game object.

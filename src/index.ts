@@ -60,6 +60,11 @@ window.onload = () => {
         // Enemy sprites/images
         game.load.spritesheet('pod_move', 'assets/sprites/reguld/reguld_move.png', 33, 37);
         game.load.spritesheet('fighter_move', 'assets/sprites/gnerl/gnerl_move.png', 33, 37);
+        game.load.spritesheet('glaug_move', 'assets/sprites/glaug/glaug_move.png', 33, 37);
+        
+        game.load.spritesheet('enemy_pellet', 'assets/sprites/enemy_pellet/enemy_pellet.png', 8, 8);
+        game.load.spritesheet('enemy_laser', 'assets/sprites/enemy_laser/enemy_laser.png', 3, 24);
+
         game.load.spritesheet('explosion_sm', 'assets/sprites/explosion_sm/explosion_sm.png', 33, 37);
 
         // UI sprites/images
@@ -156,10 +161,10 @@ window.onload = () => {
         gamePhases = [
             new GamePhase('advance', -1, undefined),
             new GamePhase('scramble', 0, 0),
-            new GamePhase('combat D', 1, 300),
-            new GamePhase('combat C', 2, 1000),
-            new GamePhase('combat B', 3, 15000),
-            new GamePhase('combat A', 4, 20000),
+            new GamePhase('combat D', 1, 1000),
+            new GamePhase('combat C', 2, 3000),
+            new GamePhase('combat B', 3, 6500),
+            new GamePhase('combat A', 4, 12000),
             new GamePhase('combat S', 5, 25000),
             new GamePhase('combat SS', 6, 30000)
         ];

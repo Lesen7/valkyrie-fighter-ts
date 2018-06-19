@@ -29,11 +29,13 @@ export default class Pod extends Enemy {
     constructor(game: Game, sprite: Sprite) {
         super(game, sprite);
         this.health = 3;  
+
         this.speed = 50;
         this.XAmplitude = 80;
         this.XCurrent = 0;
         this.XAccel = 0;
         this.currentSense = Math.round(Math.random());
+        
         this.score = 100;
         this.difficulty = 1;
     }

@@ -6,6 +6,7 @@ import Actor from './actor';
 import gameMaster from '../index';
 import GameMaster from "./gameMaster";
 import Fighter from "./fighter";
+import SuperPod from './superPod';
 
 export default class SpawnPoint extends Actor {
     sprite: Sprite;
@@ -50,7 +51,9 @@ export default class SpawnPoint extends Actor {
                 break;
             case 'fighter':
                 this.spawn(new Fighter(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, 'fighter_move')));
+                break;
             case 'superPod':
+                this.spawn(new SuperPod(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, 'glaug_move')));
                 break;
             case 'boosterPod':
                 break;

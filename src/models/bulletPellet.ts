@@ -69,6 +69,8 @@ export default class BulletPellet extends Bullet {
      * A blinking animation is played permanently to make the player more easily aware of the projectile.
      */
     update() {
+        super.update();
+
         this.sprite.body.velocity.x = 0;
         this.sprite.body.velocity.y = 0;
 

@@ -119,7 +119,6 @@ export default class GameMaster {
      */
     initialize() {
         this.currentPhase = this.getPhase("combat D");
-        this.currentPhase.availableEnemies = ['pod', '', '', '', '', '', 'fighter', '', '', ''];
         this.isPaused = false;
         
         this.advanceText = this.player.game.add.bitmapText(this.player.game.width / 2, this.player.game.height / 2, 'smb3', 'phase change', 32);
@@ -169,7 +168,6 @@ export default class GameMaster {
             this.advanceText.alpha = 0;
 
             this.currentPhase = this.getPhase(this.latestPhase.maxDifficulty + 1);
-            console.log(this.currentPhase);
             this.phaseChangeTimer = this.phaseChangeTime;
         }
     }
@@ -231,10 +229,13 @@ export default class GameMaster {
 
         switch (this.currentPhase) {
             case this.getPhase('combat D'):
-                this.currentPhase.setEnemies(['pod', 'fighter', '', '', '', '', '', '', '', '']);
+                this.currentPhase.setEnemies(['pod', 'pod', 'pod', 'pod', 'fighter', 'fighter', '', '', '', '']);
                 break;
             case this.getPhase('combat C'):
-                this.currentPhase.setEnemies(['pod', 'fighter', 'pod', 'pod', 'fighter', '', '', '', '', '']);
+                this.currentPhase.setEnemies(['pod', 'pod', 'pod', 'pod', 'fighter', 'fighter', 'fighter', '', '', '']);
+                break;
+            case this.getPhase('combat B'):
+                this.currentPhase.setEnemies(['pod', 'fighter', 'pod', 'pod', 'fighter', 'superPod', 'superPod', 'fighter', '', '']);
                 break;
             case this.getPhase('advance'):
                 this.currentPhase.setEnemies(['', '', '', '', '', '', '', '', '', '']);
