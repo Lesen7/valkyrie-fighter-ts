@@ -206,6 +206,8 @@ export default class Player extends Actor {
             if(this.keys.fire.isDown) {
                 this.attack();
             }
-        }           
+        } else {
+            gameMaster.gameOver = true;
+        } 
     }
 }

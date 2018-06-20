@@ -9,6 +9,9 @@ import Bullet from './bullet';
 import { printAtInterval } from '../utils/printUtils';
 import { Game, BitmapText } from 'phaser-ce';
 
+import * as superagent from 'superagent';
+import { apiKey } from '../index';
+
 export default class GameMaster {
     /**
      * The game's main player object.
@@ -74,6 +77,10 @@ export default class GameMaster {
      * Counts down the phase change time.
      */
     private phaseChangeTimer: number;
+    /**
+     * Whether the game is over or not.
+     */
+    gameOver: boolean;
 
     /**
      * A Singleton that will control most of the game's flow and behaviors, and store important game properties and objects.
@@ -90,6 +97,7 @@ export default class GameMaster {
         this.enemyBullets = [];
         this.effects = [];
         this.isPaused = false;
+        this.gameOver = false;
     }
 
     /**
@@ -171,13 +179,13 @@ export default class GameMaster {
             this.phaseChangeTimer = this.phaseChangeTime;
         }
     }
-    
+
     /**
      * Updates the game objects according to game phases.
      * Iterates through object pools to update them and, if necessary, deletes them for optimization.
      */
     update() {
-        if(!this.isPaused) {
+        if(!this.isPaused && !this.gameOver) {
             this.player.update();
             this.enemies.forEach((enemy, index) => {
                 enemy.update();
@@ -211,7 +219,13 @@ export default class GameMaster {
             this.spawnPoints.forEach((spawnPoint, index) => {
                 spawnPoint.stop();
             });
-        } 
+        } else if (this.gameOver) {
+            superagent.post('http://arcadehub.me/score').set('Authorization', apiKey).send({score: this.score}).end((err, data) => {
+                if(err != undefined) {
+                    console.log('Ha ocurrido un error');
+                }
+            });
+        }
 
         if(this.player.keys.pause.justDown) {
             if(this.isPaused == true) {
@@ -220,7 +234,7 @@ export default class GameMaster {
                 this.isPaused = true;
             }
         }
-        
+
         if(this.score >= this.currentPhase.maxScore) {
             this.latestPhase = this.currentPhase;
             this.advanceText.alpha = 1;
