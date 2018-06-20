@@ -25,7 +25,7 @@ export default class Fighter extends Enemy {
         this.speed = 120;
 
         this.attackRate = 120;
-        this.attackTimer = this.attackRate;
+        this.attackTimer = 0;
 
         this.score = 150;
         this.difficulty = 1;

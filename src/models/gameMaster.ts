@@ -81,7 +81,7 @@ export default class GameMaster {
      */
     constructor() {
         this.score = 0;
-        this.phaseChangeTime = 300;
+        this.phaseChangeTime = 200;
         this.phaseChangeTimer = this.phaseChangeTime;
         this.blinkTime = 40;
         this.blinkTimer = this.blinkTime;
@@ -229,13 +229,16 @@ export default class GameMaster {
 
         switch (this.currentPhase) {
             case this.getPhase('combat D'):
-                this.currentPhase.setEnemies(['pod', 'pod', 'pod', 'pod', 'fighter', 'fighter', '', '', '', '']);
+                this.currentPhase.setEnemies(['pod', 'pod', 'pod', 'pod', 'fighter', 'fighter', 'pod', '', '', '']);
                 break;
             case this.getPhase('combat C'):
                 this.currentPhase.setEnemies(['pod', 'pod', 'pod', 'pod', 'fighter', 'fighter', 'fighter', '', '', '']);
                 break;
             case this.getPhase('combat B'):
-                this.currentPhase.setEnemies(['pod', 'fighter', 'pod', 'pod', 'fighter', 'superPod', 'superPod', 'fighter', '', '']);
+                this.currentPhase.setEnemies(['pod', 'fighter', 'pod', 'pod', 'fighter', 'superPod', 'superPod', 'boostedPod', 'boostedPod', '']);
+                break;
+            case this.getPhase('combat A'):
+                this.currentPhase.setEnemies(['pod', 'fighter', 'pod', 'pod', 'fighter', 'superPod', 'superPod', 'fighter', 'boostedPod', 'boostedPod']);
                 break;
             case this.getPhase('advance'):
                 this.currentPhase.setEnemies(['', '', '', '', '', '', '', '', '', '']);

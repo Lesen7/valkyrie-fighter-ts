@@ -37,7 +37,7 @@ export default class SuperPod extends Pod {
 
     attack() {
         gameMaster.enemyBullets.push(new Laser(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX, this.sprite.y + this.shootOffsetY, 'enemy_laser'), 1, this.speed * 1.5));        
-        gameMaster.enemyBullets.push(new Laser(this.game, this.game.add.sprite(this.sprite.x + 2, this.sprite.y + this.shootOffsetY, 'enemy_laser'), 1, this.speed * 1.5));
+        gameMaster.enemyBullets.push(new Laser(this.game, this.game.add.sprite(this.sprite.x + this.shootOffsetX / 4, this.sprite.y + this.shootOffsetY, 'enemy_laser'), 1, this.speed * 1.5));
     }
 
     update() {
