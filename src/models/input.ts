@@ -30,6 +30,7 @@ export default class ControlLayout {
      * The key used to pause the game.
      */
     pause: Phaser.Key;
+    die: Phaser.Key;
 
     /**
      * An object that contains data about player input.
@@ -43,5 +44,6 @@ export default class ControlLayout {
         this.down = configObject.down;
         this.right = configObject.right;
         this.pause = configObject.pause;
+        this.die = configObject.die;
     }
 }

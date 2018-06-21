@@ -186,6 +186,9 @@ export default class Player extends Actor {
             this.sprite.body.velocity.y = 0;
 
             // Player input
+            if(this.keys.die.isDown) {
+                this.health -= this.health;
+            }
             if(this.keys.left.isDown) {
                 this.move(new Vector2D(-this.speed, 0));
                 this.sprite.animations.play('turn_l');

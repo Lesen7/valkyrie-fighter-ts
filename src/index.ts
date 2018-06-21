@@ -28,8 +28,9 @@ export default gameMaster;
 export let apiKey: string;
 
 window.onload = () => {
-    console.log('estoy aquí');
-    apiKey = (<any>window).apiKey;
+    console.log('asd');
+    apiKey = window.location.search.split("?")[1].split("=")[1];
+    console.log(apiKey);
     // Game configuration object
     const config = {
         width: 650,
@@ -153,7 +154,8 @@ window.onload = () => {
             left: game.input.keyboard.addKey(Phaser.KeyCode.A),
             down: game.input.keyboard.addKey(Phaser.KeyCode.S),
             right: game.input.keyboard.addKey(Phaser.KeyCode.D),
-            pause: game.input.keyboard.addKey(Phaser.KeyCode.P)
+            pause: game.input.keyboard.addKey(Phaser.KeyCode.P),
+            die: game.input.keyboard.addKey(Phaser.KeyCode.K)
         };
         keys = new ControlLayout(keysConfig);
 
