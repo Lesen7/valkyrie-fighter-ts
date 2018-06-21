@@ -251,7 +251,7 @@ export default class GameMaster {
                 spawnPoint.stop();
             });
 
-            superagent.post('http://arcadehub.me/score').set('Authorization', apiKey).send({gameName: 'Valkyrie Fighter', score: this.score}).end((err, data) => {
+            superagent.post('http://api.arcadehub.me/score').set('Authorization', apiKey).send({gameName: 'Valkyrie Fighter', score: this.score}).end((err, data) => {
                 if(err != undefined) {
                     console.log('Ha ocurrido un error');
                 }
