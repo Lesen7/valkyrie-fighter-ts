@@ -186,7 +186,9 @@ window.onload = () => {
     }
     function update() {
         // Game object updates
-        gameMaster.update();
+        if(gameMaster.gameEnded == false) {
+            gameMaster.update();
+        }
         scoreText.text = scoreMessage + leftPad(gameMaster.score.toString(), 8, "0").split('').join('\n');
 
         // Special collisions

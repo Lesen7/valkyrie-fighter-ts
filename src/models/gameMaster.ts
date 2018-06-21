@@ -83,6 +83,7 @@ export default class GameMaster {
      * Whether the game is over or not.
      */
     gameOver: boolean;
+    gameEnded: boolean;
 
     /**
      * A Singleton that will control most of the game's flow and behaviors, and store important game properties and objects.
@@ -100,6 +101,7 @@ export default class GameMaster {
         this.effects = [];
         this.isPaused = false;
         this.gameOver = false;
+        this.gameEnded = false;
     }
 
     /**
@@ -248,11 +250,13 @@ export default class GameMaster {
             this.spawnPoints.forEach((spawnPoint, index) => {
                 spawnPoint.stop();
             });
-            superagent.post('http://arcadehub.me/score').set('Authorization', apiKey).send({score: this.score}).end((err, data) => {
+
+            superagent.post('http://arcadehub.me/score').set('Authorization', apiKey).send({gameName: 'Valkyrie Fighter', score: this.score}).end((err, data) => {
                 if(err != undefined) {
                     console.log('Ha ocurrido un error');
                 }
             });
+            this.gameEnded = true;
         }
 
         if(this.player.keys.pause.justDown) {
