@@ -233,6 +233,7 @@ export default class GameMaster {
             this.gameOverText = this.player.game.add.bitmapText(this.player.game.width / 2, this.player.game.height / 2, 'smb3', this.gameOverMessage, 25);
             this.gameOverText.anchor.setTo(0.5, 0.5);
             this.gameOverText.alpha = 1;
+            this.advanceText.alpha = 0;
 
             this.player.stop();
             this.player.bullets.forEach((bullet, index) => {

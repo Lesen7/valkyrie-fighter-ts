@@ -28,6 +28,7 @@ export default gameMaster;
 export let apiKey: string;
 
 window.onload = () => {
+    console.log('estoy aquí');
     apiKey = (<any>window).apiKey;
     // Game configuration object
     const config = {
