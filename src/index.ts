@@ -137,6 +137,7 @@ window.onload = () => {
         healthBars = [];
 
         // UI text initializations
+
         scoreMessage = "score\n".split('').join('\n');
         scoreText = game.add.bitmapText(game.width - 25, game.height / 2, 'smb3', scoreMessage, 20);
         scoreText.anchor.setTo(0.5, 0.5);

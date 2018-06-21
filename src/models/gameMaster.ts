@@ -60,7 +60,9 @@ export default class GameMaster {
     /**
      * The text that will appear when the game advances to the next phase.
      */
-    advanceText: BitmapText;
+    advanceText: Phaser.BitmapText;
+    gameOverText: Phaser.BitmapText;
+    gameOverMessage: string;
     /**
      * Defines how often the on-screen message for a phase change will blink. 
      */
@@ -132,6 +134,11 @@ export default class GameMaster {
         this.advanceText = this.player.game.add.bitmapText(this.player.game.width / 2, this.player.game.height / 2, 'smb3', 'phase change', 32);
         this.advanceText.anchor.setTo(0.5, 0.5);
         this.advanceText.alpha = 0;
+        
+        this.gameOverMessage = `game over \n your score \n ${this.score}`;
+        this.gameOverText = this.player.game.add.bitmapText(this.player.game.width / 2, this.player.game.height / 2, 'smb3', this.gameOverMessage, 25);
+        this.gameOverText.anchor.setTo(0.5, 0.5);
+        this.gameOverText.alpha = 0;
     }
 
     /**
@@ -220,6 +227,27 @@ export default class GameMaster {
                 spawnPoint.stop();
             });
         } else if (this.gameOver) {
+            this.gameOverMessage = `game over \n your score \n` + this.score;
+            this.gameOverText = this.player.game.add.bitmapText(this.player.game.width / 2, this.player.game.height / 2, 'smb3', this.gameOverMessage, 25);
+            this.gameOverText.anchor.setTo(0.5, 0.5);
+            this.gameOverText.alpha = 1;
+
+            this.player.stop();
+            this.player.bullets.forEach((bullet, index) => {
+                bullet.stop();
+            });
+            this.enemies.forEach((enemy, index) => {
+                enemy.stop();
+            });
+            this.enemyBullets.forEach((enemyBullet, index) => {
+                enemyBullet.stop();
+            });
+            this.effects.forEach((effect, index) => {
+                effect.stop();
+            });
+            this.spawnPoints.forEach((spawnPoint, index) => {
+                spawnPoint.stop();
+            });
             superagent.post('http://arcadehub.me/score').set('Authorization', apiKey).send({score: this.score}).end((err, data) => {
                 if(err != undefined) {
                     console.log('Ha ocurrido un error');
