@@ -8,6 +8,7 @@ import gameMaster from '../index';
 import PlayerBullet from './playerBullet';
 import Vector2D from '../utils/vector2D';
 import * as Phaser from 'phaser-ce';
+import Effect from './effect';
 
 export default class Player extends Actor {
     /**
@@ -116,6 +117,9 @@ export default class Player extends Actor {
             
             this.blinkTimer = this.blinkTime;
         }
+        if(this.health < 1) {
+            gameMaster.effects.push(new Effect(this.game, this.game.add.sprite(this.sprite.x, this.sprite.y, 'explosion_sm')));
+        }
     }
 
     blink() {
@@ -187,7 +191,7 @@ export default class Player extends Actor {
 
             // Player input
             if(this.keys.die.isDown) {
-                this.health -= this.health;
+                this.takeDamage(this.health);
             }
             if(this.keys.left.isDown) {
                 this.move(new Vector2D(-this.speed, 0));

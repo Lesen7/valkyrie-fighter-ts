@@ -167,14 +167,14 @@ window.onload = () => {
 
         // Creating and initializing the GameMaster object
         gamePhases = [
-            new GamePhase('advance', -1, undefined),
-            new GamePhase('scramble', 0, 0),
-            new GamePhase('combat D', 1, 1500),
-            new GamePhase('combat C', 2, 3000),
-            new GamePhase('combat B', 3, 6500),
-            new GamePhase('combat A', 4, 12000),
-            new GamePhase('combat S', 5, 25000),
-            new GamePhase('combat SS', 6, undefined)
+            new GamePhase('advance', -1, undefined, 0),
+            new GamePhase('scramble', 0, 0, 0),
+            new GamePhase('combat D', 1, 1500, 0),
+            new GamePhase('combat C', 2, 3000, 0.1),
+            new GamePhase('combat B', 3, 6500, 0.2),
+            new GamePhase('combat A', 4, 12000, 0.3),
+            new GamePhase('combat S', 5, 25000, 0.4),
+            new GamePhase('combat SS', 6, undefined, 0.5)
         ];
         spawnPoints = [
             new SpawnPoint(game, game.add.sprite(game.width / 2, 5), 0.4),

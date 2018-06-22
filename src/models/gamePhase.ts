@@ -1,4 +1,5 @@
 import Enemy from "./enemy";
+import { spawn } from "child_process";
 
 export default class GamePhase {
     /**
@@ -17,6 +18,7 @@ export default class GamePhase {
      * The enemies that can spawn in the phase, along with their aspect ratios.
      */
     availableEnemies: string[];
+    spawnModifier: number;
 
     /**
      * An object containing data about a game phase.
@@ -24,11 +26,12 @@ export default class GamePhase {
      * @param maxDifficulty The phase's maximum difficulty.
      * @param maxScore The score needed to finish this phase. This amount is relative to already obtained score. A negative value will ensure the phase will never advance automatically.
      */
-    constructor(name: string, maxDifficulty: number, maxScore: number) {
+    constructor(name: string, maxDifficulty: number, maxScore: number, spawnModifier: number) {
         this.availableEnemies = [];
         this.name = name;
         this.maxDifficulty = maxDifficulty;
         this.maxScore = maxScore;
+        this.spawnModifier = spawnModifier;
     }
 
     /**

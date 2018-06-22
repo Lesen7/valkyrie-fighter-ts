@@ -185,6 +185,9 @@ export default class GameMaster {
             this.advanceText.alpha = 0;
 
             this.currentPhase = this.getPhase(this.latestPhase.maxDifficulty + 1);
+            this.spawnPoints.forEach((spawnPoint, index) => {
+                spawnPoint.frequency += this.currentPhase.spawnModifier;
+            })
             this.phaseChangeTimer = this.phaseChangeTime;
         }
     }
@@ -245,9 +248,6 @@ export default class GameMaster {
             this.enemyBullets.forEach((enemyBullet, index) => {
                 enemyBullet.stop();
             });
-            this.effects.forEach((effect, index) => {
-                effect.stop();
-            });
             this.spawnPoints.forEach((spawnPoint, index) => {
                 spawnPoint.stop();
             });
@@ -276,16 +276,22 @@ export default class GameMaster {
 
         switch (this.currentPhase) {
             case this.getPhase('combat D'):
-                this.currentPhase.setEnemies(['pod', 'pod', 'pod', 'pod', 'fighter', 'fighter', 'pod', '', '', '']);
+                this.currentPhase.setEnemies(['pod', 'pod', 'pod', 'pod', 'pod', 'pod', 'pod', '', '', '']);
                 break;
             case this.getPhase('combat C'):
                 this.currentPhase.setEnemies(['pod', 'pod', 'pod', 'pod', 'fighter', 'fighter', 'fighter', '', '', '']);
                 break;
             case this.getPhase('combat B'):
-                this.currentPhase.setEnemies(['pod', 'fighter', 'pod', 'pod', 'fighter', 'superPod', 'superPod', 'boostedPod', 'boostedPod', '']);
+                this.currentPhase.setEnemies(['pod', 'fighter', 'pod', 'pod', 'fighter', 'superPod', 'superPod', 'fighter', 'superPod', '']);
                 break;
             case this.getPhase('combat A'):
                 this.currentPhase.setEnemies(['pod', 'fighter', 'pod', 'pod', 'fighter', 'superPod', 'superPod', 'fighter', 'boostedPod', 'boostedPod']);
+                break;
+            case this.getPhase('combat S'):
+                this.currentPhase.setEnemies(['pod', 'pod', 'fighter', 'fighter', 'superPod', 'superPod', 'boostedPod', 'boostedPod', 'fighter', 'pod']);
+                break;
+            case this.getPhase('combat SS'):
+                this.currentPhase.setEnemies(['pod', 'pod', 'superPod', 'fighter', 'superPod', 'superPod', 'boostedPod', 'boostedPod', 'fighter', 'boostedPod']);
                 break;
             case this.getPhase('advance'):
                 this.currentPhase.setEnemies(['', '', '', '', '', '', '', '', '', '']);
