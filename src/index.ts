@@ -25,12 +25,10 @@ import leftPad from './utils/formatUtils';
 let gameMaster = new GameMaster();
 export default gameMaster;
 
-export let apiKey: string;
+// export let apiKey: string;
 
 window.onload = () => {
-    console.log('asd');
-    apiKey = window.location.search.split("?")[1].split("=")[1];
-    console.log(apiKey);
+    //apiKey = window.location.search.split("?")[1].split("=")[1];
     // Game configuration object
     const config = {
         width: 650,

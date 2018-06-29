@@ -10,7 +10,7 @@ import { printAtInterval } from '../utils/printUtils';
 import { Game, BitmapText } from 'phaser-ce';
 
 import * as superagent from 'superagent';
-import { apiKey } from '../index';
+//import { apiKey } from '../index';
 
 export default class GameMaster {
     /**
@@ -251,12 +251,12 @@ export default class GameMaster {
             this.spawnPoints.forEach((spawnPoint, index) => {
                 spawnPoint.stop();
             });
-
+            /*
             superagent.post('http://api.arcadehub.me/score').set('Authorization', apiKey).send({gameName: 'Valkyrie Fighter', score: this.score}).end((err, data) => {
                 if(err != undefined) {
                     console.log('Ha ocurrido un error');
                 }
-            });
+            });*/
             this.gameEnded = true;
         }
 
